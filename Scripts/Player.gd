@@ -13,7 +13,7 @@ var speed = 300
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 	lastheal=position
 	pass # Replace with function body.
 
@@ -43,9 +43,10 @@ func _physics_process(delta):
 		self.position=lastheal
 		hp=maxhp
 		incapacitated=false
-		self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
-	get_input()
-	velocity = move_and_slide(velocity)
+		self.get_node(Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	if not Global.freeze:
+		get_input()
+		velocity = move_and_slide(velocity)
 
 
 
@@ -55,25 +56,25 @@ func dealDamage(damage):
 	if hp<= 0:
 		hp=0
 		incapacitated = true
-	self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 
 func heal(amount):
 	hp+=amount
 	if hp>maxhp:
 		hp=maxhp
-	self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 
 func resetHealth():
 	lastheal=position
 	hp=maxhp
-	self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 
 func doTransaction(amount, type) ->bool:
 	#type = true when adding money
 	#type = false when taking money
 	if(type):
 		gp+=amount
-		self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+		self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 		return true
 	else:
 		if gp<amount:
@@ -81,7 +82,7 @@ func doTransaction(amount, type) ->bool:
 			return false
 		else:
 			gp-=amount
-			self.get_node("Display/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+			self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 			return true
 
 func addXP(amount):
