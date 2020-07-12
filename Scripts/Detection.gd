@@ -23,7 +23,7 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (self.is_colliding() and not processing):
+	if (self.is_colliding() and not processing and not Global.freeze):
 		processing=true
 		if(self.get_collider().get_parent().name=="Damage"):
 			self.get_parent().overworld_damage(2)
@@ -34,6 +34,12 @@ func _process(delta):
 			t.start()
 			yield(t, "timeout")
 			t.queue_free()
+		elif(self.get_collider().get_parent().name=="Monsters"):
+			Global.freeze=true
+			self.get_collider().queue_free()
+			var scene = preload("res://Scenes/Fight.tscn")
+			var node = scene.instance()
+			self.get_parent().get_node("Display/CanvasLayer/Overlay").add_child(node)
+			Global.freeze = true
 
-		
 		processing = false
