@@ -1,9 +1,17 @@
 extends KinematicBody2D
 
-var maxhp = 10
-var hp = 10
 var gp = 200
-var xp = 0
+
+var tedmaxhp = 10
+var tedhp = 10
+var tedxp = 0
+var tedspd = 5
+
+var maddymaxhp = 8
+var maddyhp = 8
+var maddyxp = 0
+var maddyspd = 5
+
 var incapacitated = false
 var invulnerable = false
 var lastheal = Vector2()
@@ -13,9 +21,9 @@ var speed = 300
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
 	lastheal=position
-	pass # Replace with function body.
+	changeLeader(0)
+	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func get_input():
 	velocity = Vector2()
@@ -41,40 +49,61 @@ func _physics_process(delta):
 	if(incapacitated):
 		invulnerable = false
 		self.position=lastheal
-		hp=maxhp
+		tedhp = tedmaxhp
+		maddyhp=maddymaxhp
 		incapacitated=false
-		self.get_node(Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 	if not Global.freeze:
 		get_input()
 		velocity = move_and_slide(velocity)
 
+func changeLeader(lead):
+	pass
 
 
+func dealDamage(damage, target):
+	if(target=="Ted"):
+		tedhp-=damage
+		if tedhp<=0:
+			tedhp=0
+			changeLeader(1)
+	elif(target=="Maddy"):
+		maddyhp-=damage
+		if maddyhp<=0:
+			maddyhp=0
+			changeLeader(0)
+	if(maddyhp == 0 and tedhp==0):
+		incapacitated=true
+	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
-func dealDamage(damage):
-	hp-=damage
-	if hp<= 0:
-		hp=0
-		incapacitated = true
-	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+func healchar(amount, target):
+	if(target=="Ted"):
+		tedhp+=amount
+		if tedhp>tedmaxhp:
+			tedhp=tedmaxhp
+	elif(target=="Maddy"):
+		maddyhp+=amount
+		if maddyhp>maddymaxhp:
+			maddyhp=maddymaxhp
+	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func heal(amount):
-	hp+=amount
-	if hp>maxhp:
-		hp=maxhp
-	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	healchar(amount, "Ted")
+	healchar(amount, "Maddy")
+	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func resetHealth():
 	lastheal=position
-	hp=maxhp
-	self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+	tedhp=tedmaxhp
+	maddyhp=maddymaxhp
+	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func doTransaction(amount, type) ->bool:
 	#type = true when adding money
 	#type = false when taking money
 	if(type):
 		gp+=amount
-		self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 		return true
 	else:
 		if gp<amount:
@@ -82,16 +111,19 @@ func doTransaction(amount, type) ->bool:
 			return false
 		else:
 			gp-=amount
-			self.get_node("Display/CanvasLayer/Labels").set_text("HP:"+(str(hp)+"\n"+"GP:"+str(gp)))
+			self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 			return true
 
 func addXP(amount):
-	xp+=amount
+	tedxp+=amount
+	maddyxp+=amount
+
 
 func overworld_damage(amount):
 	if(not invulnerable):
 		invulnerable = true
-		dealDamage(amount)
+		dealDamage(amount, "Ted")
+		dealDamage(amount, "Maddy")
 		self.modulate.a = 0.5
 		var t = Timer.new() #time spent being invulnerable
 		t.set_wait_time(0.3)
