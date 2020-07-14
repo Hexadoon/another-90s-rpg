@@ -65,10 +65,94 @@ __meta__ = {
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="Monster" type="StaticBody2D" parent="Enemies"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 813.533, 145.822 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Monster"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Enemies/Monster"]
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster"]
+margin_left = -34.0
+margin_top = -56.0
+margin_right = 49.0
+margin_bottom = -24.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "HP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Monster2" type="StaticBody2D" parent="Enemies"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 816.529, 247.707 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Monster2"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Enemies/Monster2"]
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster2"]
+margin_left = -34.0
+margin_top = -56.0
+margin_right = 49.0
+margin_bottom = -24.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "HP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Monster3" type="StaticBody2D" parent="Enemies"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 815.031, 357.084 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Monster3"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Enemies/Monster3"]
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster3"]
+margin_left = -34.0
+margin_top = -56.0
+margin_right = 49.0
+margin_bottom = -24.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "HP: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 302.019
+margin_top = 468.636
+margin_right = 473.019
+margin_bottom = 484.636
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Oh boy a fight scene!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TEMP" type="Node2D" parent="."]
 position = Vector2( 35.0691, 336.636 )
 
 [node name="Win" type="Button" parent="TEMP"]
+visible = false
 margin_left = 261.887
 margin_top = 167.258
 margin_right = 305.887
@@ -79,46 +163,47 @@ __meta__ = {
 }
 
 [node name="Lose" type="Button" parent="TEMP"]
-margin_left = 322.534
-margin_top = 168.371
-margin_right = 370.534
-margin_bottom = 191.371
+visible = false
+margin_left = 316.541
+margin_top = 166.873
+margin_right = 364.541
+margin_bottom = 189.873
 text = "LOSE!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HurtMaddy" type="Button" parent="TEMP"]
-margin_left = 382.0
-margin_top = 168.0
-margin_right = 468.0
-margin_bottom = 191.0
-text = "Hurt Maddy"
+[node name="PlayerAttack" type="Button" parent="TEMP"]
+margin_left = 281.613
+margin_top = 166.502
+margin_right = 376.613
+margin_bottom = 189.502
+text = "Player Attack"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HurtTed" type="Button" parent="TEMP"]
-margin_left = 487.834
-margin_top = 168.371
-margin_right = 562.834
-margin_bottom = 191.371
-text = "Hurt Ted"
+[node name="PlayerSpecial" type="Button" parent="TEMP"]
+margin_left = 405.427
+margin_top = 166.873
+margin_right = 505.427
+margin_bottom = 189.873
+text = "Player Special"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TEMP"]
-margin_left = 266.95
-margin_top = 132.0
-margin_right = 437.95
-margin_bottom = 148.0
-custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Oh boy a fight scene!"
+[node name="MonsterAttack" type="Button" parent="TEMP"]
+margin_left = 537.278
+margin_top = 169.869
+margin_right = 646.278
+margin_bottom = 192.869
+text = "Monster Attack"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="TEMP/Win" to="." method="_on_Win_pressed"]
 [connection signal="pressed" from="TEMP/Lose" to="." method="_on_Lose_pressed"]
-[connection signal="pressed" from="TEMP/HurtMaddy" to="." method="_on_HurtMaddy_pressed"]
-[connection signal="pressed" from="TEMP/HurtTed" to="." method="_on_HurtTed_pressed"]
+[connection signal="pressed" from="TEMP/PlayerAttack" to="." method="_on_PlayerAttack_pressed"]
+[connection signal="pressed" from="TEMP/PlayerSpecial" to="." method="_on_PlayerSpecial_pressed"]
+[connection signal="pressed" from="TEMP/MonsterAttack" to="." method="_on_MonsterAttack_pressed"]
