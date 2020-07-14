@@ -23,7 +23,7 @@ func leave():
 	Global.freeze = false
 	if transaction == 0:
 		player.doTransaction(10, false)
-		player.heal(player.maxhp/2)
+		player.heal(5)
 	if transaction == 1:
 		player.doTransaction(20, false)
 		player.resetHealth()
