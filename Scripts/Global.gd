@@ -1,10 +1,17 @@
 extends Node
 
 var freeze = false
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
+
+func unfreeze():
+	var t = Timer.new() #time spent being invulnerable
+	t.set_wait_time(0.1)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
+	freeze=false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
