@@ -14,6 +14,7 @@ var endattack
 var turn
 
 var playerturn = false
+var playerdone
 var done
 
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +24,7 @@ func _ready():
 	setupMonsters(monstertype)
 	turn = 2
 	done=true
+	playerdone=true
 	if(player.tedhp==0):
 		player.healchar(1,"Ted")
 	if(player.maddyhp==0):
@@ -107,51 +109,58 @@ func _process(delta):
 		if(player.tedhp<=0):
 			turn+=1
 			done=true
+			playerdone=true
 		else:
 			done=false
+			playerdone=false
 			self.get_node("RichTextLabel").set_text("Ted is going to attack!")
 			var t = Timer.new() 
-			t.set_wait_time(3)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			_on_PlayerAttack_pressed()
-			t = Timer.new() 
 			t.set_wait_time(2)
 			t.set_one_shot(true)
 			self.add_child(t)
 			t.start()
 			yield(t, "timeout")
 			t.queue_free()
+			self.get_node("TEMP").visible=true
+#			_on_PlayerAttack_pressed()
+			while(not playerdone):
+				t = Timer.new() 
+				t.set_wait_time(2)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
 			turn+=1
-			done=true
-		
+			done=playerdone	
 	if(turn==4 and done):
 		if(player.maddyhp<=0):
 			turn=0
+			playerdone=false
 			done=true
 		else:
+			playerdone=false
 			done=false
 			self.get_node("RichTextLabel").set_text("Maddy is going to attack!")
 			var t = Timer.new() 
-			t.set_wait_time(3)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			_on_PlayerAttack_pressed()
-			t = Timer.new() 
 			t.set_wait_time(2)
 			t.set_one_shot(true)
 			self.add_child(t)
 			t.start()
 			yield(t, "timeout")
 			t.queue_free()
+			self.get_node("TEMP").visible=true
+			#_on_PlayerAttack_pressed()
+			while(not playerdone):
+				t = Timer.new() 
+				t.set_wait_time(2)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
 			turn=0
-			done=true
+			done=playerdone
 			
 
 
@@ -242,7 +251,6 @@ func enemyattack(target):
 		delta=6
 		self.get_node("RichTextLabel").set_text("0")
 	var dmg = (6-delta)*2
-	print(str(dmg))
 	if(dmg<0):
 		dmg==0
 	if(not endattack):
@@ -340,7 +348,6 @@ func playerattack(target):
 			delta=6
 			self.get_node("RichTextLabel").set_text("0")
 		var dmg = delta*2
-		print(str(dmg))
 		if (dmg<=3 or endattack==false):
 			self.get_node("RichTextLabel").set_text("MISS")
 		elif(dmg<=8):
@@ -364,6 +371,7 @@ func playerattack(target):
 		self.get_node("Enemies/Monster/RichTextLabel").set_text("HP"+str(hp[0]))
 		self.get_node("Enemies/Monster2/RichTextLabel").set_text("HP"+str(hp[1]))
 		self.get_node("Enemies/Monster3/RichTextLabel").set_text("HP"+str(hp[2]))	
+	playerdone=true
 	
 func doDamageEffect(target, type):
 	#type is true for monsters and false for heroes
@@ -398,41 +406,10 @@ func playerspecial(user, target):
 		if(user=="Ted"):
 			self.get_node("RichTextLabel").set_text("Ted Goes All Out!")
 			playerattack(target)
-			var t = Timer.new() #time spent being invulnerable
-			t.set_wait_time(1)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			playerattack(target)
-			t = Timer.new() #time spent being invulnerable
-			t.set_wait_time(1)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			playerattack(target)
-			t = Timer.new() #time spent being invulnerable
-			t.set_wait_time(1)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			playerattack(target)
-			t = Timer.new() #time spent being invulnerable
-			t.set_wait_time(1)
-			t.set_one_shot(true)
-			self.add_child(t)
-			t.start()
-			yield(t, "timeout")
-			t.queue_free()
-			playerattack(target)
 		if(user=="Maddy"):
 			self.get_node("RichTextLabel").set_text("Maddy heals"+ target)
 			player.healchar(5, target)
+			playerdone=true
 		self.get_node("Heroes/Maddy/RichTextLabel").set_text("Maddy HP"+str(player.maddyhp)+"MP"+str(player.maddymp))
 		self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"MP"+str(player.tedmp))
 	else:
@@ -491,18 +468,110 @@ func randomHero() -> String:
 	else:
 		return "Ted"
 
+	
 func _on_PlayerAttack_pressed():
-	var target = getMonster()
-	playerattack(target)
+	self.get_node("TEMP").visible=false
+	var i=0
+	while(hp[i]<=0):
+		i+=1
+		if(i>=3):
+			i=0
+	self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+	var enter = false
+	while (not enter):
+		var t = Timer.new() 
+		t.set_wait_time(.1)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		enter=Input.is_key_pressed(KEY_ENTER)
+		if(Input.is_key_pressed(KEY_UP)):
+			i+=1
+			if(i>=3):
+				i=0
+			while(hp[i]<=0):
+				i+=1
+				if(i>=3):
+					i=0
+			self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+		if(Input.is_key_pressed(KEY_DOWN)):
+			i-=1
+			if(i<0):
+				i=2
+			while(hp[i]<=0):
+				i-=1
+				if(i<0):
+					i=2
+			self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+	playerattack(i+1)
 
 
 func _on_PlayerSpecial_pressed():
-	var user = randomHero()
+	self.get_node("TEMP").visible=false
+	var user =randomHero()
+	if(turn==3):
+		user="Ted"
+	elif(turn==4):
+		user="Maddy"
 	var target
 	if(user=="Maddy"):
-		target = randomHero()
+		target="Maddy"
+		if(player.tedhp>0):
+			self.get_node("RichTextLabel").set_text("Target = "+target)
+			var enter = false
+			while (not enter):
+				var t = Timer.new() 
+				t.set_wait_time(.1)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				enter=Input.is_key_pressed(KEY_ENTER)
+				if(Input.is_key_pressed(KEY_UP) or Input.is_key_pressed(KEY_DOWN)):
+					if(target=="Maddy"):
+						target="Ted"
+					else:
+						target="Maddy"
+					self.get_node("RichTextLabel").set_text("Target = "+target)
 	else:
-		target = getMonster()
+		var i=0
+		while(hp[i]<=0):
+			i+=1
+			if(i>=3):
+				i=0
+		self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+		var enter = false
+		while (not enter):
+			var t = Timer.new() 
+			t.set_wait_time(.1)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			enter=Input.is_key_pressed(KEY_ENTER)
+			if(Input.is_key_pressed(KEY_UP)):
+				i+=1
+				if(i>=3):
+					i=0
+				while(hp[i]<=0):
+					i+=1
+					if(i>=3):
+						i=0
+				self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+			if(Input.is_key_pressed(KEY_DOWN)):
+				i-=1
+				if(i<0):
+					i=2
+				while(hp[i]<=0):
+					i-=1
+					if(i<0):
+						i=2
+				self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+		target=i+1
 	playerspecial(user, target)
 
 
