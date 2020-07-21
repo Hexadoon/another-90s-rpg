@@ -6,11 +6,15 @@ var tedmaxhp = 10
 var tedhp = 10
 var tedxp = 0
 var tedspd = 5
+var tedmaxmp = 8
+var tedmp = 8
 
 var maddymaxhp = 8
 var maddyhp = 8
 var maddyxp = 0
 var maddyspd = 5
+var maddymaxmp = 10
+var maddymp = 10
 
 var incapacitated = false
 var invulnerable = false
@@ -27,22 +31,35 @@ func _ready():
 
 func get_input():
 	velocity = Vector2()
+	if Input.is_action_just_released("ui_right"):
+		self.get_node("Sprite").play("idleside")
+	if Input.is_action_just_released("ui_left"):
+		self.get_node("Sprite").play("idleside")
+	if Input.is_action_just_released("ui_up"):
+		self.get_node("Sprite").play("idleup")
+	if Input.is_action_just_released("ui_down"):
+		self.get_node("Sprite").play("idledown")
+	
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
 		self.get_node("RayCast2D").set_rotation_degrees(-90)
-		self.get_node("Sprite").set_rotation_degrees(-90)
+		self.get_node("Sprite").play("walkside")
+		self.get_node( "Sprite" ).set_flip_h(false)
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= 1
 		self.get_node("RayCast2D").set_rotation_degrees(90)
-		self.get_node("Sprite").set_rotation_degrees(90)
+		self.get_node("Sprite").play("walkside")
+		self.get_node( "Sprite" ).set_flip_h(true)
 	if Input.is_action_pressed('ui_up'):
 		velocity.y -= 1
 		self.get_node("RayCast2D").set_rotation_degrees(180)
-		self.get_node("Sprite").set_rotation_degrees(180)
+		self.get_node("Sprite").play("walkup")
+		self.get_node( "Sprite" ).set_flip_h(false)
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
 		self.get_node("RayCast2D").set_rotation_degrees(0)
-		self.get_node("Sprite").set_rotation_degrees(0)
+		self.get_node("Sprite").play("walkdown")
+		self.get_node( "Sprite" ).set_flip_h(false)
 	velocity = velocity.normalized() * speed
 
 func _physics_process(delta):
@@ -53,6 +70,15 @@ func _physics_process(delta):
 		maddyhp=maddymaxhp
 		incapacitated=false
 		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
+	if Global.freeze:
+		if Input.is_action_just_released("ui_right"):
+			self.get_node("Sprite").play("idleside")
+		if Input.is_action_just_released("ui_left"):
+			self.get_node("Sprite").play("idleside")
+		if Input.is_action_just_released("ui_up"):
+			self.get_node("Sprite").play("idleup")
+		if Input.is_action_just_released("ui_down"):
+			self.get_node("Sprite").play("idledown")
 	if not Global.freeze:
 		get_input()
 		velocity = move_and_slide(velocity)
@@ -76,6 +102,33 @@ func dealDamage(damage, target):
 		incapacitated=true
 	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
+func useMP(amount, target) -> bool:
+	if(target=="Ted"):
+		tedmp-=amount
+		if(tedmp>=0):
+			return true
+		else:
+			tedmp+=amount
+			return false
+	elif(target=="Maddy"):
+		maddymp-=amount
+		if(maddymp>=0):
+			return true
+		else:
+			maddymp+=amount
+			return false
+	return false
+		
+func restoreMP(amount, target):
+	if(target=="Ted"):
+		tedmp+=amount
+		if tedmp>tedmaxmp:
+			tedmp=tedmaxmp
+	elif(target=="Maddy"):
+		maddymp+=amount
+		if maddymp>maddymaxmp:
+			maddymp=maddymaxmp
+
 func healchar(amount, target):
 	if(target=="Ted"):
 		tedhp+=amount
@@ -95,7 +148,9 @@ func heal(amount):
 func resetHealth():
 	lastheal=position
 	tedhp=tedmaxhp
+	tedmp=tedmaxmp
 	maddyhp=maddymaxhp
+	maddymp=maddymaxmp
 	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func doTransaction(amount, type) ->bool:
