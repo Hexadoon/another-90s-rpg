@@ -7,6 +7,7 @@ extends Node
 var position 
 var timestart
 var timenow
+var isred =false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,11 +23,23 @@ func _process(delta):
 		if (elapsed == 5):
 			timestart=OS.get_unix_time()
 			var rand = randi()%5+1
-			print(str(rand))
-			if rand == 1 and self.get_child_count() == 0:
+			if rand == 2 and self.get_child_count() == 0:
+				isred=true
 				var scene = preload("res://Scenes/Monster.tscn")
 				var node = scene.instance()
 				self.add_child(node)
 				node.position = position
+				self.get_node("Monster/Sprite").play("redpassive")
+			if rand == 1 and self.get_child_count() == 0:
+				isred=false
+				var scene = preload("res://Scenes/Monster.tscn")
+				var node = scene.instance()
+				self.add_child(node)
+				node.position = position
+			elif (rand==1 and self.get_child_count()==1):
+				if(isred):
+					self.get_node("Monster/Sprite").play("redpopup")
+				else:
+					self.get_node("Monster/Sprite").play("popup")
 	else:
 		timestart=OS.get_unix_time()
