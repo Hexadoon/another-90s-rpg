@@ -13,11 +13,15 @@ func _ready():
 	
 	self.get_node("Stats/Maddy").set_text("Maddy HP: " + str(player.maddyhp)+"/"+str(player.maddymaxhp) +"\n")
 	self.get_node("Stats/Maddy").add_text("Maddy MP: " + str(player.maddymp)+"/"+str(player.maddymaxmp)+"\n")
-	self.get_node("Stats/Maddy").add_text("Maddy XP: " + str(player.maddyxp))
+	self.get_node("Stats/Maddy").add_text("Maddy XP: " + str(player.maddyxp)+"\n")
+	self.get_node("Stats/Maddy").add_text("Maddy STR: " + str(player.maddystr)+"\n")
+	self.get_node("Stats/Maddy").add_text("Maddy DEF: " + str(player.maddydef))
 	
 	self.get_node("Stats/Ted").set_text("Ted HP: " + str(player.tedhp)+"/"+str(player.tedmaxhp)+"\n")
 	self.get_node("Stats/Ted").add_text("Ted MP: " + str(player.tedmp)+"/"+str(player.tedmaxmp)+"\n")
-	self.get_node("Stats/Ted").add_text("Ted XP: " + str(player.tedxp))
+	self.get_node("Stats/Ted").add_text("Ted XP: " + str(player.tedxp)+"\n")
+	self.get_node("Stats/Ted").add_text("Ted STR: " + str(player.tedstr)+"\n")
+	self.get_node("Stats/Ted").add_text("Ted DEF: " + str(player.teddef))
 	pass # Replace with function body.
 
 
