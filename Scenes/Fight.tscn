@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/FightScene.gd" type="Script" id=1]
 [ext_resource path="res://Assets/battle_screen_pixeltest.png" type="Texture" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Battle/mushroom_battle_idle.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Battle/ted_battle_idle.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Battle/sam_battle_idle.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Battle/rose_battle_idle.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Battle/mad_battle_idle.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -16,9 +20,31 @@ texture = ExtResource( 2 )
 
 [node name="Heroes" type="Node2D" parent="."]
 
+[node name="Rose" type="StaticBody2D" parent="Heroes"]
+position = Vector2( 277.547, 144.086 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Heroes/Rose"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Heroes/Rose"]
+texture = ExtResource( 6 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Rose"]
+margin_left = -34.0
+margin_top = -56.0
+margin_right = 49.0
+margin_bottom = -24.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Rose HP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Maddy" type="StaticBody2D" parent="Heroes"]
-modulate = Color( 0.980392, 0.172549, 0.890196, 1 )
-position = Vector2( 153.708, 183.571 )
+position = Vector2( 219.634, 206.046 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -27,21 +53,22 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heroes/Maddy"]
-texture = ExtResource( 3 )
+texture = ExtResource( 7 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Maddy"]
-margin_left = -38.8
-margin_top = -61.25
-margin_right = 79.2
-margin_bottom = -34.25
+margin_left = -39.0
+margin_top = -61.0
+margin_right = 79.0
+margin_bottom = -27.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Maddy HP:"
+text = "Maddy HP:
+MP"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Ted" type="StaticBody2D" parent="Heroes"]
-position = Vector2( 157.274, 304.643 )
+position = Vector2( 172.257, 286.663 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -50,7 +77,7 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heroes/Ted"]
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Ted"]
 margin_left = -34.0
@@ -63,10 +90,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sam" type="StaticBody2D" parent="Heroes"]
+position = Vector2( 131.803, 385.552 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Heroes/Sam"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Heroes/Sam"]
+texture = ExtResource( 5 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Sam"]
+margin_left = -34.0
+margin_top = -56.0
+margin_right = 49.0
+margin_bottom = -24.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Sam HP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Monster" type="StaticBody2D" parent="Enemies"]
-modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 813.533, 145.822 )
 __meta__ = {
 "_edit_group_": true
@@ -90,7 +139,6 @@ __meta__ = {
 }
 
 [node name="Monster2" type="StaticBody2D" parent="Enemies"]
-modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 816.529, 247.707 )
 __meta__ = {
 "_edit_group_": true
@@ -114,7 +162,6 @@ __meta__ = {
 }
 
 [node name="Monster3" type="StaticBody2D" parent="Enemies"]
-modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 815.031, 357.084 )
 __meta__ = {
 "_edit_group_": true
@@ -138,10 +185,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 302.019
-margin_top = 468.636
-margin_right = 473.019
-margin_bottom = 484.636
+margin_left = 302.0
+margin_top = 469.0
+margin_right = 678.0
+margin_bottom = 485.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Oh boy a fight scene!"
 __meta__ = {
@@ -195,6 +242,7 @@ __meta__ = {
 }
 
 [node name="MonsterAttack" type="Button" parent="TEMP"]
+visible = false
 margin_left = 537.278
 margin_top = 169.869
 margin_right = 646.278
