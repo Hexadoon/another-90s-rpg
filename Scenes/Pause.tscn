@@ -37,9 +37,9 @@ __meta__ = {
 
 [node name="Maddy" type="RichTextLabel" parent="Stats"]
 margin_left = 31.0
-margin_top = 85.0
+margin_top = 80.0
 margin_right = 187.0
-margin_bottom = 166.0
+margin_bottom = 161.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Maddy HP: 
 Maddy MP: 
@@ -49,15 +49,47 @@ Maddy DEF:"
 
 [node name="Ted" type="RichTextLabel" parent="Stats"]
 margin_left = 31.0
-margin_top = 185.0
+margin_top = 180.0
 margin_right = 187.0
-margin_bottom = 266.0
+margin_bottom = 261.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Ted HP: 
 Ted MP: 
 Ted XP: 
 Ted STR:
 Ted DEF:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sam" type="RichTextLabel" parent="Stats"]
+visible = false
+margin_left = 31.0
+margin_top = 280.0
+margin_right = 187.0
+margin_bottom = 361.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Sam HP: 
+Sam MP: 
+Sam XP: 
+Sam STR:
+Sam DEF:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rose" type="RichTextLabel" parent="Stats"]
+visible = false
+margin_left = 31.0
+margin_top = 380.0
+margin_right = 187.0
+margin_bottom = 461.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Rose HP: 
+Rose MP: 
+Rose XP: 
+Rose STR:
+Rose DEF:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
