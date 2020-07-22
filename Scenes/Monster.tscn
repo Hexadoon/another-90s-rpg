@@ -38,7 +38,7 @@ animations = [ {
 extents = Vector2( 22.1097, 26.2541 )
 
 [node name="Monster" type="KinematicBody2D"]
-scale = Vector2( 4, 4 )
+scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
 }
