@@ -12,6 +12,10 @@ var monstertype
 var nummonsters
 var endattack
 var turn
+var monstr
+var mondef
+var mondmg
+#MONSTER STATS SET DURING SETUPMONSTERS
 
 var playerturn = false
 var playerdone
@@ -169,6 +173,9 @@ func setupMonsters(type):
 	xpgain = 10
 	gpgain = 2
 	nummonsters = 3
+	monstr = 2
+	mondef = 2
+	mondmg=2
 	self.get_node("Enemies/Monster/RichTextLabel").set_text("HP"+str(hp[0]))
 	self.get_node("Enemies/Monster2/RichTextLabel").set_text("HP"+str(hp[1]))
 	self.get_node("Enemies/Monster3/RichTextLabel").set_text("HP"+str(hp[2]))	
@@ -250,20 +257,27 @@ func enemyattack(target):
 		t.queue_free()
 		delta=6
 		self.get_node("RichTextLabel").set_text("0")
-	var dmg = (6-delta)*2
-	if(dmg<0):
-		dmg==0
+	var t = 1
+	delta = 6-delta
 	if(not endattack):
-		dmg=10
-	if (dmg<=1):
+		delta=6
+	if (delta<=1):
+		doDamageEffect(target,false)
 		self.get_node("RichTextLabel").set_text("GOOD BLOCK")
-	elif(dmg<=8):
+		t=.75
+	elif(delta<=5):
 		doDamageEffect(target,false)
 		self.get_node("RichTextLabel").set_text("HIT")
-		player.dealDamage(dmg, target)
+		t=1
 	else:
 		doDamageEffect(target,false)
 		self.get_node("RichTextLabel").set_text("AWFUL TIMING")
+		t=1.25
+	if(target=="Ted"):
+		var dmg = int(max(1,(monstr+mondmg-player.teddef)*t))
+		player.dealDamage(dmg, target)
+	elif(target=="Maddy"):
+		var dmg = int(max(1,(monstr+mondmg-player.maddydef)*t))
 		player.dealDamage(dmg, target)
 	if(player.maddyhp==0):
 		self.get_node("Heroes/Maddy").visible=false
@@ -275,7 +289,7 @@ func enemyattack(target):
 	self.get_node("Heroes/Maddy/RichTextLabel").set_text("Maddy HP"+str(player.maddyhp)+"MP"+str(player.maddymp))
 	self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"MP"+str(player.tedmp))
 	
-func playerattack(target):
+func playerattack(target,user):
 	if(not hp[target-1]<=0):
 		var delta=0
 		self.get_node("RichTextLabel").set_text("5")
@@ -347,17 +361,27 @@ func playerattack(target):
 			t.queue_free()
 			delta=6
 			self.get_node("RichTextLabel").set_text("0")
-		var dmg = delta*2
-		if (dmg<=3 or endattack==false):
-			self.get_node("RichTextLabel").set_text("MISS")
-		elif(dmg<=8):
+		
+		var t = 1 #timing modifier
+		if (delta<= 1 or endattack==false):
+			doDamageEffect(target,true)
+			self.get_node("RichTextLabel").set_text("WEAK")
+		elif(delta<=4):
 			doDamageEffect(target,true)
 			self.get_node("RichTextLabel").set_text("HIT")
-			hp[target-1]-=dmg
+			t=1.25
 		else:
 			doDamageEffect(target,true)
 			self.get_node("RichTextLabel").set_text("NICE TIMING")
-			hp[target-1]-=dmg
+			t=1.5
+		
+		if(user=="Ted"):
+			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*t))
+		elif(user=="Tedspecial"):
+			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*1.2*t))
+		elif(user =="Maddy"):
+			hp[target-1]-=int(max(1,(player.maddystr+player.maddyweap-mondef)*t))
+		
 		if(hp[target-1]<=0):
 			if(target==1):
 				self.get_node("Enemies/Monster").visible = false
@@ -405,7 +429,7 @@ func playerspecial(user, target):
 	if(player.useMP(5, user)):
 		if(user=="Ted"):
 			self.get_node("RichTextLabel").set_text("Ted Goes All Out!")
-			playerattack(target)
+			playerattack(target, "Tedspecial")
 		if(user=="Maddy"):
 			self.get_node("RichTextLabel").set_text("Maddy heals"+ target)
 			player.healchar(5, target)
@@ -505,7 +529,10 @@ func _on_PlayerAttack_pressed():
 				if(i<0):
 					i=2
 			self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
-	playerattack(i+1)
+	if(turn==3):
+		playerattack(i+1,"Ted")
+	else:
+		playerattack(i+1,"Maddy")
 
 
 func _on_PlayerSpecial_pressed():
