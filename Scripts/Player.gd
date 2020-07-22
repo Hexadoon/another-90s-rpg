@@ -8,6 +8,9 @@ var tedxp = 0
 var tedspd = 5
 var tedmaxmp = 8
 var tedmp = 8
+var tedstr = 3
+var teddef = 3
+var tedweap = 5
 
 var maddymaxhp = 8
 var maddyhp = 8
@@ -15,6 +18,9 @@ var maddyxp = 0
 var maddyspd = 5
 var maddymaxmp = 10
 var maddymp = 10
+var maddystr = 1
+var maddydef = 1
+var maddyweap = 3
 
 var incapacitated = false
 var invulnerable = false
