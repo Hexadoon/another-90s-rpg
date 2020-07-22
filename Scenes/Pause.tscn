@@ -37,23 +37,30 @@ __meta__ = {
 
 [node name="Maddy" type="RichTextLabel" parent="Stats"]
 margin_left = 31.0
-margin_top = 83.0
+margin_top = 85.0
 margin_right = 187.0
-margin_bottom = 141.0
+margin_bottom = 166.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Maddy HP: 
 Maddy MP: 
-Maddy XP: "
+Maddy XP: 
+Maddy STR:
+Maddy DEF:"
 
 [node name="Ted" type="RichTextLabel" parent="Stats"]
 margin_left = 31.0
-margin_top = 148.407
+margin_top = 185.0
 margin_right = 187.0
-margin_bottom = 206.407
+margin_bottom = 266.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Ted HP: 
 Ted MP: 
-Ted XP: "
+Ted XP: 
+Ted STR:
+Ted DEF:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Instructions" type="ColorRect" parent="."]
 margin_left = 373.0
