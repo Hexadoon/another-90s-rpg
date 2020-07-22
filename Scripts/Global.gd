@@ -1,7 +1,8 @@
 extends Node
 
 var freeze = false
-
+var samexist = true
+var roseexist = true
 
 func unfreeze():
 	var t = Timer.new() #time spent being invulnerable
