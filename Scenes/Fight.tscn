@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/FightScene.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Battle/battle_screen_2_UI_box.png" type="Texture" id=2]
@@ -6,10 +6,53 @@
 [ext_resource path="res://Assets/Battle/ted_battle_idle.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Battle/sam_battle_idle.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Battle/rose_battle_idle.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Battle/mad_battle_idle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle2.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Battle/battle_screen_v2.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle4.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle5.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle3.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle1.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward2.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward3.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward1.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward4.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward5.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward6.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_jump_forward7.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_scalpel2.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_scalpel4.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_scalpel3.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_scalpel5.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_scalpel1.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_syringe5.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_syringe4.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_syringe1.png" type="Texture" id=27]
+[ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_syringe2.png" type="Texture" id=28]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "idle",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 20 ), ExtResource( 24 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 23 ), ExtResource( 23 ) ],
+"loop": false,
+"name": "attack",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 26 ) ],
+"loop": false,
+"name": "special",
+"speed": 10.0
+} ]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -26,8 +69,8 @@ texture = ExtResource( 2 )
 
 [node name="Heroes" type="Node2D" parent="."]
 
-[node name="Rose" type="StaticBody2D" parent="Heroes"]
-position = Vector2( 277.547, 144.086 )
+[node name="Rose" type="KinematicBody2D" parent="Heroes"]
+position = Vector2( 331.724, 126.447 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -36,21 +79,23 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heroes/Rose"]
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 6 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Rose"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = -57.9385
+margin_top = -79.9385
+margin_right = 25.0615
+margin_bottom = -47.9385
 custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Rose HP:"
+text = "Rose HP:
+MP:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Maddy" type="StaticBody2D" parent="Heroes"]
-position = Vector2( 219.634, 206.046 )
+[node name="Maddy" type="KinematicBody2D" parent="Heroes"]
+position = Vector2( 271.291, 201.006 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -58,14 +103,18 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Heroes/Maddy"]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Heroes/Maddy"]
-texture = ExtResource( 7 )
+[node name="Sprite" type="AnimatedSprite" parent="Heroes/Maddy"]
+scale = Vector2( 2.1, 2.1 )
+frames = SubResource( 2 )
+animation = "idle"
+frame = 7
+playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Maddy"]
-margin_left = -39.0
-margin_top = -61.0
-margin_right = 79.0
-margin_bottom = -27.0
+margin_left = -85.6171
+margin_top = -96.2778
+margin_right = 32.3829
+margin_bottom = -62.2778
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "Maddy HP:
 MP"
@@ -73,8 +122,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Ted" type="StaticBody2D" parent="Heroes"]
-position = Vector2( 172.257, 286.663 )
+[node name="Ted" type="KinematicBody2D" parent="Heroes"]
+position = Vector2( 183.596, 287.923 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -83,21 +132,23 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heroes/Ted"]
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 4 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Ted"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = -73.0576
+margin_top = -91.2778
+margin_right = 9.94244
+margin_bottom = -59.2778
 custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Ted HP:"
+text = "Ted HP:
+MP:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sam" type="StaticBody2D" parent="Heroes"]
-position = Vector2( 131.803, 385.552 )
+[node name="Sam" type="KinematicBody2D" parent="Heroes"]
+position = Vector2( 107.864, 409.49 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -106,15 +157,17 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heroes/Sam"]
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 5 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Sam"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = -64.2381
+margin_top = -92.5377
+margin_right = 18.7619
+margin_bottom = -60.5377
 custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Sam HP:"
+text = "Sam HP:
+MP:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -122,7 +175,7 @@ __meta__ = {
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Monster" type="StaticBody2D" parent="Enemies"]
-position = Vector2( 813.533, 145.822 )
+position = Vector2( 665.707, 146.571 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -131,13 +184,14 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Enemies/Monster"]
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 3 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = 22.7714
+margin_top = -76.8193
+margin_right = 105.771
+margin_bottom = -44.8193
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "HP:"
 __meta__ = {
@@ -145,7 +199,7 @@ __meta__ = {
 }
 
 [node name="Monster2" type="StaticBody2D" parent="Enemies"]
-position = Vector2( 816.529, 247.707 )
+position = Vector2( 754.69, 263.725 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -154,13 +208,14 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Enemies/Monster2"]
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 3 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster2"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = 31.5159
+margin_top = -71.1191
+margin_right = 114.516
+margin_bottom = -39.1191
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "HP:"
 __meta__ = {
@@ -168,7 +223,7 @@ __meta__ = {
 }
 
 [node name="Monster3" type="StaticBody2D" parent="Enemies"]
-position = Vector2( 815.031, 357.084 )
+position = Vector2( 851.072, 382.446 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -177,13 +232,15 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Enemies/Monster3"]
+position = Vector2( -10.0793, 13.8591 )
+scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 3 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster3"]
-margin_left = -34.0
-margin_top = -56.0
-margin_right = 49.0
-margin_bottom = -24.0
+margin_left = 21.4365
+margin_top = -58.5198
+margin_right = 104.437
+margin_bottom = -26.5198
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "HP: "
 __meta__ = {
@@ -202,6 +259,7 @@ __meta__ = {
 }
 
 [node name="TEMP" type="Node2D" parent="."]
+visible = false
 position = Vector2( 35.0691, 387.433 )
 __meta__ = {
 "_edit_group_": true
