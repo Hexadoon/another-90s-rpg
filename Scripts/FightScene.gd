@@ -16,6 +16,7 @@ var numturns
 var monstr
 var mondef
 var mondmg
+
 #MONSTER STATS SET DURING SETUPMONSTERS
 
 var playerturn = false
@@ -39,6 +40,9 @@ func _ready():
 			player.healchar(1,"Sam")
 		numturns+=1
 	turn = randi()%numturns
+	
+	turn=4
+	
 	done=true
 	playerdone=true
 	if(player.tedhp==0):
@@ -140,7 +144,6 @@ func _process(delta):
 			yield(t, "timeout")
 			t.queue_free()
 			self.get_node("TEMP").visible=true
-#			_on_PlayerAttack_pressed()
 			while(not playerdone):
 				t = Timer.new() 
 				t.set_wait_time(2)
@@ -170,7 +173,6 @@ func _process(delta):
 			yield(t, "timeout")
 			t.queue_free()
 			self.get_node("TEMP").visible=true
-			#_on_PlayerAttack_pressed()
 			while(not playerdone):
 				t = Timer.new() 
 				t.set_wait_time(2)
@@ -202,7 +204,6 @@ func _process(delta):
 			yield(t, "timeout")
 			t.queue_free()
 			self.get_node("TEMP").visible=true
-			#_on_PlayerAttack_pressed()
 			while(not playerdone):
 				t = Timer.new() 
 				t.set_wait_time(2)
@@ -234,7 +235,6 @@ func _process(delta):
 			yield(t, "timeout")
 			t.queue_free()
 			self.get_node("TEMP").visible=true
-			#_on_PlayerAttack_pressed()
 			while(not playerdone):
 				t = Timer.new() 
 				t.set_wait_time(2)
@@ -381,9 +381,44 @@ func enemyattack(target):
 	self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"\nMP"+str(player.tedmp))
 	self.get_node("Heroes/Sam/RichTextLabel").set_text("Sam HP"+str(player.samhp)+"\nMP"+str(player.sammp))
 	self.get_node("Heroes/Rose/RichTextLabel").set_text("Rose HP"+str(player.rosehp)+"\nMP"+str(player.rosemp))
-	
+		
+
 func playerattack(target,user):
 	if(not hp[target-1]<=0):
+		var nodetarget
+		var nodeuser
+		var startpos
+		var endpos
+		if(user=="Ted"):
+			nodeuser=self.get_node("Heroes/Ted")
+		elif(user=="Maddy"):
+			nodeuser=self.get_node("Heroes/Maddy")
+			nodeuser.get_node("Sprite").play("jump")
+			var t = Timer.new() 
+			t.set_wait_time(1)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			nodeuser.get_node("Sprite").play("idle")
+		elif(user=="Rose"):
+			nodeuser=self.get_node("Heroes/Rose")
+		elif(user=="Sam"):
+			nodeuser=self.get_node("Heroes/Sam")
+		startpos=nodeuser.global_position
+		if(target==0):
+			nodetarget = nodeuser
+		elif(target==1):
+			nodetarget = self.get_node("Enemies/Monster")
+		elif(target==2):
+			nodetarget = self.get_node("Enemies/Monster2")
+		elif(target==3):
+			nodetarget=self.get_node("Enemies/Monster3")
+		endpos=nodetarget.global_position
+		nodeuser.global_position.x=endpos.x-150
+		nodeuser.global_position.y=endpos.y
+		
 		var delta=0
 		self.get_node("RichTextLabel").set_text("5")
 		endattack=false
@@ -457,32 +492,67 @@ func playerattack(target,user):
 		
 		var t = 1 #timing modifier
 		if (delta<= 1 or endattack==false):
-			doDamageEffect(target,true)
 			self.get_node("RichTextLabel").set_text("WEAK")
 		elif(delta<=4):
-			doDamageEffect(target,true)
 			self.get_node("RichTextLabel").set_text("HIT")
 			t=1.25
 		else:
-			doDamageEffect(target,true)
 			self.get_node("RichTextLabel").set_text("NICE TIMING")
 			t=1.5
 		
 		if(user=="Ted"):
 			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*t))
+			doDamageEffect(target,true)
 		elif(user=="Tedspecial"):
 			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*1.2*t))
+			doDamageEffect(target,true)
 		elif(user =="Maddy"):
+			nodeuser.get_node("Sprite").play("attack")
 			hp[target-1]-=int(max(1,(player.maddystr+player.maddyweap-mondef)*t))
+			t = Timer.new() 
+			t.set_wait_time(0.3)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			doDamageEffect(target,true)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
 		elif(user =="Sam"):
 			hp[target-1]-=int(max(1,(player.samstr+player.samweap-mondef)*t))
+			doDamageEffect(target,true)
 		elif(user=="Samspecial"):
 			hp[0]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
 			hp[1]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
 			hp[2]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
+			doDamageEffect(target,true)
 		elif(user =="Rose"):
 			hp[target-1]-=int(max(1,(player.rosestr+player.roseweap-mondef)*t))
-		
+			doDamageEffect(target,true)
+		nodeuser.get_node("Sprite").set_flip_h(true)
+		if(user=="Maddy"):
+			nodeuser.get_node("Sprite").play("jump")
+		t = Timer.new() 
+		t.set_wait_time(1)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		nodeuser.global_position=startpos
+		t = Timer.new() 
+		t.set_wait_time(.2)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		nodeuser.get_node("Sprite").set_flip_h(false)
+		if(user=="Maddy"):
+			nodeuser.get_node("Sprite").play("idle")
+
+	
 		var down = 0
 		if(hp[0]<=0):
 			down+=1
@@ -497,16 +567,6 @@ func playerattack(target,user):
 		if(nummonsters<=0):
 			_on_Win_pressed()
 		
-	#	if(hp[target-1]<=0):
-	#		if(target==1):
-	#			self.get_node("Enemies/Monster").visible = false
-	#		elif(target==2):
-	#			self.get_node("Enemies/Monster2").visible = false
-	#		elif(target==3):
-	#			self.get_node("Enemies/Monster3").visible = false
-	#		nummonsters-=1
-	#		if(nummonsters<=0):
-	#			_on_Win_pressed()
 		self.get_node("Enemies/Monster/RichTextLabel").set_text("HP"+str(hp[0]))
 		self.get_node("Enemies/Monster2/RichTextLabel").set_text("HP"+str(hp[1]))
 		self.get_node("Enemies/Monster3/RichTextLabel").set_text("HP"+str(hp[2]))	
@@ -555,6 +615,46 @@ func playerspecial(user, target):
 			playerattack(target, "Tedspecial")
 		if(user=="Maddy"):
 			self.get_node("RichTextLabel").set_text("Maddy heals "+ target)
+			if not target=="Maddy":
+				var nodetarget
+				var nodeuser = self.get_node("Heroes/Maddy")
+				var startpos
+				var endpos
+				if(target=="Ted"):
+					nodetarget=self.get_node("Heroes/Ted")
+				if(target=="Sam"):
+					nodetarget=self.get_node("Heroes/Sam")
+				if(target=="Rose"):
+					nodetarget=self.get_node("Heroes/Rose")
+				#nodeuser.get_node("Sprite").set_flip_h(true)
+				nodeuser.get_node("Sprite").play("jump")
+				var t = Timer.new() 
+				t.set_wait_time(1)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				
+				endpos=nodetarget.global_position
+				startpos=nodeuser.global_position
+				nodeuser.global_position.x=endpos.x+75
+				#nodeuser.global_position.x=endpos.x-75
+				nodeuser.global_position.y=endpos.y
+				nodeuser.get_node("Sprite").set_flip_h(true)
+				#nodeuser.get_node("Sprite").set_flip_h(false)
+				nodeuser.get_node("Sprite").play("special")
+				t.set_wait_time(0.6)
+				t.start()
+				yield(t, "timeout")
+				nodeuser.get_node("Sprite").play("jump")
+				t.set_wait_time(1)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				nodeuser.global_position=startpos
+				nodeuser.get_node("Sprite").set_flip_h(false)
+				nodeuser.get_node("Sprite").play("idle")
+				
 			player.healchar(5, target)
 			playerdone=true
 		if(user=="Sam"):
