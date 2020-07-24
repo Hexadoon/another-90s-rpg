@@ -13,9 +13,9 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Table of Contents
 
-- [Installation]()
-- [Controls]()
-- [Developers]()
+- [Installation](https://github.com/Hexadoon/another-90s-rpg#installation)
+- [Controls](https://github.com/Hexadoon/another-90s-rpg#controls)
+- [Developers](https://github.com/Hexadoon/another-90s-rpg#developers)
 
 ## Installation
 
@@ -32,7 +32,6 @@ Use ESCAPE to pause the game in the overworld and leave interfaces
 CLICK to select items in the Inn and see offers
 
 Get too close to an enemy and Combat will ensue!
-
 
 
 During combat:
