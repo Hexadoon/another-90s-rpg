@@ -4,23 +4,27 @@ var gp = 200
 
 var tedmaxhp = 10
 var tedhp = 10
-var tedxp = 0
+var tedxp = 5
 var tedspd = 5
 var tedmaxmp = 8
 var tedmp = 8
 var tedstr = 3
 var teddef = 2
 var tedweap = 3
+var tedlvl = 1
+var tednxtlvl = 10
 
 var maddymaxhp = 8
 var maddyhp = 8
-var maddyxp = 0
+var maddyxp = 5
 var maddyspd = 5
 var maddymaxmp = 15
 var maddymp = 15
 var maddystr = 1
 var maddydef = 1
 var maddyweap = 3
+var maddylvl=1
+var maddynxtlvl = 10
 
 var sammaxhp = 9
 var samhp = 9
@@ -31,6 +35,8 @@ var sammp = 10
 var samstr = 2
 var samdef = 1
 var samweap = 3
+var samlvl=1
+var samnxtlvl = 10
 
 var rosemaxhp = 9
 var rosehp = 9
@@ -41,6 +47,8 @@ var rosemp = 8
 var rosestr = 2
 var rosedef = 2
 var roseweap = 3
+var roselvl=1
+var rosenxtlvl = 10
 
 var incapacitated = false
 var invulnerable = false
@@ -114,6 +122,39 @@ func _physics_process(delta):
 func changeLeader(lead):
 	pass
 
+func lvlup(target):
+	if(target=="Ted"):
+		tedmaxhp+=3
+		tedmaxmp+=1
+		teddef+=randi()%2
+		tedstr+=randi()%2
+		tedspd+=randi()%2
+		tednxtlvl = 2*tednxtlvl
+		tedlvl+=1
+	elif(target=="Maddy"):
+		maddymaxhp+=1
+		maddymaxmp+=3
+		maddydef+=randi()%2
+		maddystr+=randi()%2
+		maddyspd+=randi()%2
+		maddynxtlvl = 2*maddynxtlvl
+		maddylvl+=1
+	elif(target=="Rose"):
+		rosemaxhp+=2
+		rosemaxmp+=2
+		rosedef+=randi()%2
+		rosestr+=randi()%2
+		rosespd+=randi()%2
+		rosenxtlvl=2*rosenxtlvl
+		roselvl+=1
+	elif(target=="Sam"):
+		sammaxhp+=1
+		sammaxhp+=3
+		samdef+=randi()%2
+		samstr+=randi()%2
+		samspd+=randi()%2
+		samnxtlvl=2*samnxtlvl
+		samlvl+=1
 
 func dealDamage(damage, target):
 	if(target=="Ted"):
