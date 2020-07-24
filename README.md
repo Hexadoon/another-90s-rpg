@@ -19,7 +19,7 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Installation
 
-- The playable files can be found [here](https://github.com/Hexadoon/Data-Recovery/tree/master/Data-Recovery/CurrentGame)
+- The playable files can be found [here]()
 
 ## Controls
 
