@@ -19,6 +19,18 @@ func _input(event):
 				var node = scene.instance()
 				self.get_parent().get_node("Display/CanvasLayer/Overlay").add_child(node)
 				Global.freeze = true
+			if(self.get_collider().name=="Sam"):
+				Global.samexist=true
+				self.get_collider().visible=false
+				self.get_collider().position = Vector2(-1000,-1000)
+				self.get_collider().queue_free()
+			if(self.get_collider().name=="Rose"):
+				Global.roseexist=true
+				self.get_collider().visible=false
+				self.get_collider().position = Vector2(-1000,-1000)
+				self.get_collider().queue_free()
+
+			
 	if(event is InputEventKey and event.pressed):
 		if(Input.is_key_pressed(KEY_ESCAPE)):
 			if not Global.freeze and not pausescreen:
