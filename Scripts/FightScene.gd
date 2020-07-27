@@ -5,6 +5,7 @@ extends Node
 # var a = 2
 # var b = "text"
 var player
+var sound
 var xpgain
 var gpgain
 var hp = [1, 1, 1]
@@ -26,6 +27,7 @@ var battleover = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	sound = self.get_node("AudioStreamPlayer")
 	player = self.get_parent().get_parent().get_parent().get_parent()
 	monstertype = 0 #TEMP SETTING
 	setupMonsters(monstertype)
@@ -40,9 +42,10 @@ func _ready():
 		if(player.samhp==0):
 			player.healchar(1,"Sam")
 		numturns+=1
-	turn = randi()%numturns
 	
-	turn=3
+	turn = randi()%numturns
+	#print(str(turn))
+	turn=0
 	
 	done=true
 	playerdone=true
@@ -79,8 +82,8 @@ func _process(delta):
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				turn+=1
-				done=true
+				#turn+=1
+				#done=true
 		if(turn==1 and done):
 			if(hp[1]<=0):
 				turn+=1
@@ -97,14 +100,14 @@ func _process(delta):
 				t.queue_free()
 				_on_MonsterAttack_pressed()
 				t = Timer.new() 
-				t.set_wait_time(2)
+				t.set_wait_time(4)
 				t.set_one_shot(true)
 				self.add_child(t)
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				turn+=1
-				done=true
+				#turn+=1
+				#done=true
 		if(turn==2 and done):
 			if(hp[2]<=0):
 				turn+=1
@@ -121,14 +124,14 @@ func _process(delta):
 				t.queue_free()
 				_on_MonsterAttack_pressed()
 				t = Timer.new() 
-				t.set_wait_time(2)
+				t.set_wait_time(4)
 				t.set_one_shot(true)
 				self.add_child(t)
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				turn+=1
-				done=true
+				#turn+=1
+				#done=true
 		if(turn==3 and done):
 			if(player.tedhp<=0):
 				turn+=1
@@ -185,15 +188,15 @@ func _process(delta):
 					yield(t, "timeout")
 					t.queue_free()
 				turn+=1
-				if(turn>numturns):
-					turn=0
+				#if(turn>numturns):
+				#	turn=0
 				if(not battleover):
 					done=playerdone
 		if(turn==5 and done):
-			if(player.samhp<=0):
+			if(player.samhp<=0 or Global.samexist==false):
 				turn+=1
-				if(turn>numturns):
-					turn=0
+				#if(turn>numturns):
+				#	turn=0
 				playerdone=false
 				done=true
 			else:
@@ -222,10 +225,10 @@ func _process(delta):
 				if(not battleover):
 					done=playerdone
 		if(turn==6 and done):
-			if(player.rosehp<=0):
+			if(player.rosehp<=0 or Global.roseexist==false):
 				turn+=1
-				if(turn>numturns):
-					turn=0
+				#if(turn>numturns):
+				#	turn=0
 				playerdone=false
 				done=true
 			else:
@@ -283,6 +286,43 @@ func get_input()->bool:
 	return false
 
 func enemyattack(target):
+	var nodetarget
+	var nodeuser
+	var startpos
+	var endpos
+	if(turn == 0):
+		nodeuser=self.get_node("Enemies/Monster")
+	elif(turn ==1):
+		nodeuser=self.get_node("Enemies/Monster2")
+	elif(turn ==2):
+		nodeuser=self.get_node("Enemies/Monster3")
+	if(target=="Ted"):
+		nodetarget=self.get_node("Heroes/Ted")
+	if(target=="Maddy"):
+		nodetarget=self.get_node("Heroes/Maddy")
+	if(target=="Rose"):
+		nodetarget=self.get_node("Heroes/Rose")
+	if(target=="Sam"):
+		nodetarget=self.get_node("Heroes/Sam")
+	nodeuser.get_node("Sprite").play("jump")
+	startpos=nodeuser.position
+	endpos=nodetarget.global_position
+	nodeuser.z_index = 1
+	var ti = Timer.new() 
+	ti.set_wait_time(1)
+	ti.set_one_shot(true)
+	self.add_child(ti)
+	ti.start()
+	yield(ti, "timeout")
+	nodeuser.global_position.x=endpos.x+150
+	nodeuser.global_position.y=endpos.y
+	ti.set_wait_time(.3)
+	ti.start()
+	yield(ti, "timeout")
+	ti.queue_free()
+	nodeuser.get_node("Sprite").play("idle")
+	
+	
 	var delta=0
 	self.get_node("RichTextLabel").set_text("5")
 	endattack=false
@@ -366,6 +406,16 @@ func enemyattack(target):
 	else:
 		self.get_node("RichTextLabel").set_text("AWFUL TIMING")
 		t=1.25
+	sound.set_stream(preload("res://Game Ready Sounds/Toy Sword.wav"))
+	sound.play()
+	nodeuser.get_node("Sprite").play("attack")
+	ti = Timer.new() 
+	ti.set_wait_time(.5)
+	ti.set_one_shot(true)
+	self.add_child(ti)
+	ti.start()
+	yield(ti, "timeout")
+	ti.queue_free()
 	if(target=="Ted"):
 		if(t==.75):
 			self.get_node("Heroes/Ted/Sprite").play("block")
@@ -399,13 +449,41 @@ func enemyattack(target):
 		self.get_node("Heroes/Maddy/Sprite").play("idle")
 		t.queue_free()
 	elif(target=="Sam"):
+		if(t==.75):
+			self.get_node("Heroes/Sam/Sprite").play("block")
+		else:
+			self.get_node("Heroes/Sam/Sprite").play("hit")
 		var dmg = int(max(1,(monstr+mondmg-player.samdef)*t))
 		player.dealDamage(dmg, target)
 		doDamageEffect(target,false)
+		t = Timer.new() 
+		t.set_wait_time(0.2)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		self.get_node("Heroes/Sam/Sprite").play("idle")
+		t.queue_free()
 	elif(target=="Rose"):
 		var dmg = int(max(1,(monstr+mondmg-player.rosedef)*t))
 		player.dealDamage(dmg, target)
 		doDamageEffect(target,false)
+	nodeuser.get_node("Sprite").set_flip_h(true)
+	nodeuser.get_node("Sprite").play("jump")
+	t = Timer.new() 
+	t.set_wait_time(1)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	nodeuser.position=startpos
+	nodeuser.get_node("Sprite").set_flip_h(false)
+	t.set_wait_time(0.3)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
+	nodeuser.get_node("Sprite").play("idle")
+	
 	if(player.maddyhp==0):
 		self.get_node("Heroes/Maddy").visible=false
 	if(player.tedhp==0):
@@ -421,7 +499,9 @@ func enemyattack(target):
 	self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"\nMP"+str(player.tedmp))
 	self.get_node("Heroes/Sam/RichTextLabel").set_text("Sam HP"+str(player.samhp)+"\nMP"+str(player.sammp))
 	self.get_node("Heroes/Rose/RichTextLabel").set_text("Rose HP"+str(player.rosehp)+"\nMP"+str(player.rosemp))
-		
+	turn+=1
+	nodeuser.z_index = 0
+	done=true
 
 func playerattack(target,user):
 	if(not hp[target-1]<=0):
@@ -457,16 +537,17 @@ func playerattack(target,user):
 			nodeuser=self.get_node("Heroes/Sam")
 		startpos=nodeuser.global_position
 		if(target==0):
-			nodetarget = nodeuser
+			nodetarget = self.get_node("Enemies/Monster2")
 		elif(target==1):
 			nodetarget = self.get_node("Enemies/Monster")
 		elif(target==2):
 			nodetarget = self.get_node("Enemies/Monster2")
 		elif(target==3):
 			nodetarget=self.get_node("Enemies/Monster3")
-		endpos=nodetarget.global_position
-		nodeuser.global_position.x=endpos.x-150
-		nodeuser.global_position.y=endpos.y
+		if(not (user=="Sam" or user=="Samspecial")):
+			endpos=nodetarget.global_position
+			nodeuser.global_position.x=endpos.x-150
+			nodeuser.global_position.y=endpos.y
 		
 		var delta=0
 		self.get_node("RichTextLabel").set_text("5")
@@ -550,6 +631,8 @@ func playerattack(target,user):
 			t=1.5
 		
 		if(user=="Ted"):
+			sound.set_stream(preload("res://Game Ready Sounds/Bat Hit.wav"))
+			sound.play()
 			nodeuser.get_node("Sprite").play("attack")
 			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*t))
 			t = Timer.new() 
@@ -563,20 +646,42 @@ func playerattack(target,user):
 			yield(t, "timeout")
 			t.queue_free()
 		elif(user=="Tedspecial"):
+			sound.set_stream(preload("res://Game Ready Sounds/Bat Hit.wav"))
+			#sound.play()
 			nodeuser.get_node("Sprite").play("special")
 			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*1.75*t))
+			var hr =false
+			if(t==1.5):
+				self.get_node("RichTextLabel").set_text("HOME RUN!")
+				hr=true
 			t = Timer.new() 
-			t.set_wait_time(.8)
+			t.set_wait_time(.5)
 			t.set_one_shot(true)
 			self.add_child(t)
 			t.start()
 			yield(t, "timeout")
+			sound.play()
+			t.set_wait_time(.3)
+			t.start()
+			yield(t, "timeout")
 			doDamageEffect(target,true)
-			t.set_wait_time(0.4)
+			if(hr):
+				sound.set_stream(preload("res://Game Ready Sounds/Home Run!.wav"))
+				sound.play()
+				t.set_wait_time(.4)
+				t.start()
+				yield(t, "timeout")
+				nodeuser.get_node("Sprite").play("idle")
+				t.set_wait_time(1.6)
+				t.start()
+				yield(t, "timeout")
+			t.set_wait_time(.4)
 			t.start()
 			yield(t, "timeout")
 			t.queue_free()
 		elif(user =="Maddy"):
+			sound.set_stream(preload("res://Game Ready Sounds/Slashing Sound.wav"))
+			sound.play()
 			nodeuser.get_node("Sprite").play("attack")
 			hp[target-1]-=int(max(1,(player.maddystr+player.maddyweap-mondef)*t))
 			t = Timer.new() 
@@ -590,36 +695,66 @@ func playerattack(target,user):
 			yield(t, "timeout")
 			t.queue_free()
 		elif(user =="Sam"):
+			sound.set_stream(preload("res://Game Ready Sounds/Card Toss.wav"))
+			sound.play()
+			nodeuser.get_node("Sprite").play("attack")
 			hp[target-1]-=int(max(1,(player.samstr+player.samweap-mondef)*t))
+			t = Timer.new() 
+			t.set_wait_time(0.3)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
 			doDamageEffect(target,true)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
 		elif(user=="Samspecial"):
+			sound.set_stream(preload("res://Game Ready Sounds/Boom.wav"))
+			
+			nodeuser.get_node("Sprite").play("special")
 			hp[0]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
 			hp[1]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
 			hp[2]-=int(max(1,(player.samstr+player.samweap-mondef)*.5*t))
+			t = Timer.new() 
+			t.set_wait_time(0.3)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			sound.play()
+			t.start()
+			yield(t, "timeout")
 			doDamageEffect(target,true)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
 		elif(user =="Rose"):
+			sound.set_stream(preload("res://Game Ready Sounds/Toy Sword.wav"))
+			sound.play()
 			hp[target-1]-=int(max(1,(player.rosestr+player.roseweap-mondef)*t))
 			doDamageEffect(target,true)
-		nodeuser.get_node("Sprite").set_flip_h(true)
-		if(user=="Maddy" or "Ted" or "Tedspecial"):
-			nodeuser.get_node("Sprite").play("jump")
-		t = Timer.new() 
-		t.set_wait_time(1)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		t.queue_free()
-		nodeuser.global_position=startpos
-		t = Timer.new() 
-		t.set_wait_time(.2)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		t.queue_free()
-		nodeuser.get_node("Sprite").set_flip_h(false)
-		if(user=="Maddy" or user=="Ted" or user=="Tedspecial"):
+		if(not (user=="Sam" or user=="Samspecial")):
+			nodeuser.get_node("Sprite").set_flip_h(true)
+			if(user=="Maddy" or user=="Ted" or user=="Tedspecial"):
+				nodeuser.get_node("Sprite").play("jump")
+			t = Timer.new() 
+			t.set_wait_time(1)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			nodeuser.global_position=startpos
+			t = Timer.new() 
+			t.set_wait_time(.2)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			nodeuser.get_node("Sprite").set_flip_h(false)
+		if(user=="Maddy" or user=="Sam" or user == "Samspecial" or user=="Ted" or user=="Tedspecial"):
 			nodeuser.get_node("Sprite").play("idle")
 
 	
@@ -657,6 +792,7 @@ func doDamageEffect(target, type):
 			node = self.get_node("Enemies/Monster2")
 		elif(target==3):
 			node=self.get_node("Enemies/Monster3")
+		node.get_node("Sprite").play("hit")
 	else:
 		if(target=="Ted"):
 			node=self.get_node("Heroes/Ted")
@@ -675,6 +811,8 @@ func doDamageEffect(target, type):
 	yield(t, "timeout")
 	node.modulate.a = 1
 	t.queue_free()
+	if(type):
+		node.get_node("Sprite").play("idle")
 	
 
 	
@@ -686,6 +824,7 @@ func playerspecial(user, target):
 			playerattack(target, "Tedspecial")
 		if(user=="Maddy"):
 			self.get_node("RichTextLabel").set_text("Maddy heals "+ target)
+			sound.set_stream(preload("res://Game Ready Sounds/Healing.wav"))
 			if not target=="Maddy":
 				var nodetarget
 				var nodeuser = self.get_node("Heroes/Maddy")
@@ -734,13 +873,22 @@ func playerspecial(user, target):
 				t.start()
 				yield(t, "timeout")
 				self.get_node("Heroes/Maddy/Sprite").play("idle")
+			sound.play()
 			player.healchar(5, target)
 			playerdone=true
 		if(user=="Sam"):
 			self.get_node("RichTextLabel").set_text("Magnemite Lv 13!")
 			playerattack(0, "Samspecial")
 		if(user=="Rose"):
+			sound.set_stream(preload("res://Game Ready Sounds/Pocket Sand.wav"))
+			sound.play()
 			self.get_node("RichTextLabel").set_text("Rose throws pocket sand??? I DIDN'T CODE THIS YET D:")
+			var t = Timer.new() 
+			t.set_wait_time(1.5)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
 			playerdone=true
 		self.get_node("Heroes/Maddy/RichTextLabel").set_text("Maddy HP"+str(player.maddyhp)+"\nMP"+str(player.maddymp))
 		self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"\nMP"+str(player.tedmp))
@@ -748,6 +896,7 @@ func playerspecial(user, target):
 		self.get_node("Heroes/Rose/RichTextLabel").set_text("Rose HP"+str(player.rosehp)+"\nMP"+str(player.rosemp))
 	else:
 		self.get_node("RichTextLabel").set_text("OUT OF MP")
+		self.get_node("TEMP").visible=true
 
 #TEMP METHODS FOR TESTING BATTLE WIN AND LOSS STUFF
 func _on_Win_pressed():
@@ -1003,6 +1152,6 @@ func _on_PlayerSpecial_pressed():
 
 func _on_MonsterAttack_pressed():
 	var target = randomHero()
-	target="Ted"
+	#target="Sam"
 	enemyattack(target)
 	pass # Replace with function body.
