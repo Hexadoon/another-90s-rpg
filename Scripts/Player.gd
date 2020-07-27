@@ -56,44 +56,46 @@ var lastheal = Vector2()
 
 var velocity = Vector2()
 var speed = 300
+var sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lastheal=position
-	changeLeader(0)
+	sprite = self.get_node("MaddySprite")
+	#changeLeader("Ted")
 	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func get_input():
 	velocity = Vector2()
 	if Input.is_action_just_released("ui_right"):
-		self.get_node("Sprite").play("idleside")
+		sprite.play("idleside")
 	if Input.is_action_just_released("ui_left"):
-		self.get_node("Sprite").play("idleside")
+		sprite.play("idleside")
 	if Input.is_action_just_released("ui_up"):
-		self.get_node("Sprite").play("idleup")
+		sprite.play("idleup")
 	if Input.is_action_just_released("ui_down"):
-		self.get_node("Sprite").play("idledown")
+		sprite.play("idledown")
 	
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
 		self.get_node("RayCast2D").set_rotation_degrees(-90)
-		self.get_node("Sprite").play("walkside")
-		self.get_node( "Sprite" ).set_flip_h(false)
+		sprite.play("walkside")
+		sprite.set_flip_h(false)
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= 1
 		self.get_node("RayCast2D").set_rotation_degrees(90)
-		self.get_node("Sprite").play("walkside")
-		self.get_node( "Sprite" ).set_flip_h(true)
+		sprite.play("walkside")
+		sprite.set_flip_h(true)
 	if Input.is_action_pressed('ui_up'):
 		velocity.y -= 1
 		self.get_node("RayCast2D").set_rotation_degrees(180)
-		self.get_node("Sprite").play("walkup")
-		self.get_node( "Sprite" ).set_flip_h(false)
+		sprite.play("walkup")
+		sprite.set_flip_h(false)
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
 		self.get_node("RayCast2D").set_rotation_degrees(0)
-		self.get_node("Sprite").play("walkdown")
-		self.get_node( "Sprite" ).set_flip_h(false)
+		sprite.play("walkdown")
+		sprite.set_flip_h(false)
 	velocity = velocity.normalized() * speed
 
 func _physics_process(delta):
@@ -108,18 +110,35 @@ func _physics_process(delta):
 		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 	if Global.freeze:
 		if Input.is_action_just_released("ui_right"):
-			self.get_node("Sprite").play("idleside")
+			sprite.play("idleside")
 		if Input.is_action_just_released("ui_left"):
-			self.get_node("Sprite").play("idleside")
+			sprite.play("idleside")
 		if Input.is_action_just_released("ui_up"):
-			self.get_node("Sprite").play("idleup")
+			sprite.play("idleup")
 		if Input.is_action_just_released("ui_down"):
-			self.get_node("Sprite").play("idledown")
+			sprite.play("idledown")
 	if not Global.freeze:
 		get_input()
 		velocity = move_and_slide(velocity)
 
 func changeLeader(lead):
+	if(lead=="Ted"):
+		sprite.visible=false
+		sprite=self.get_node("TedSprite")
+		sprite.visible=true
+	elif(lead=="Sam"):
+		sprite.visible=false
+		sprite=self.get_node("SamSprite")
+		sprite.visible=true
+	elif(lead=="Rose"):
+		sprite.visible=false
+		sprite=self.get_node("RoseSprite")
+		sprite.visible=true
+	else:
+		sprite.visible=false
+		sprite=self.get_node("MaddySprite")
+		sprite.visible=true
+	
 	pass
 
 func lvlup(target):
