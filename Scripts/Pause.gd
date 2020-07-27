@@ -43,12 +43,33 @@ func _ready():
 	
 	if(Global.samexist):
 		self.get_node("Stats/Sam").visible=true
+		self.get_node("Stats/SamLead").visible=true
 	if(Global.roseexist):
 		self.get_node("Stats/Rose").visible=true
-	
+		self.get_node("Stats/RoseLead").visible=true
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_MaddyLead_pressed():
+	player.changeLeader("Maddy")
+	pass # Replace with function body.
+
+
+func _on_TedLead_pressed():
+	player.changeLeader("Ted")
+	pass # Replace with function body.
+
+
+func _on_SamLead_pressed():
+	player.changeLeader("Sam")
+	pass # Replace with function body.
+
+
+func _on_RoseLead_pressed():
+	player.changeLeader("Rose")
+	pass # Replace with function body.
