@@ -35,6 +35,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MaddyLead" type="Button" parent="Stats"]
+margin_left = 200.0
+margin_top = 61.0
+margin_right = 242.0
+margin_bottom = 81.0
+text = "Lead"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Maddy" type="RichTextLabel" parent="Stats"]
 margin_left = 31.0
 margin_top = 60.0
@@ -47,6 +57,16 @@ Maddy MP:
 Maddy XP: 
 Maddy STR:
 Maddy DEF:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TedLead" type="Button" parent="Stats"]
+margin_left = 200.0
+margin_top = 166.0
+margin_right = 242.0
+margin_bottom = 186.0
+text = "Lead"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -67,6 +87,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SamLead" type="Button" parent="Stats"]
+visible = false
+margin_left = 200.0
+margin_top = 271.0
+margin_right = 242.0
+margin_bottom = 291.0
+text = "Lead"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Sam" type="RichTextLabel" parent="Stats"]
 visible = false
 margin_left = 31.0
@@ -80,6 +111,17 @@ Sam MP:
 Sam XP: 
 Sam STR:
 Sam DEF:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoseLead" type="Button" parent="Stats"]
+visible = false
+margin_left = 200.0
+margin_top = 376.0
+margin_right = 242.0
+margin_bottom = 396.0
+text = "Lead"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -149,3 +191,7 @@ Press A with good timing to block an attack or deal extra damage
 CLICK on attack or special move during the player turn to choose what to do
 
 Use UP & DOWN ARROW KEYS to select a target"
+[connection signal="pressed" from="Stats/MaddyLead" to="." method="_on_MaddyLead_pressed"]
+[connection signal="pressed" from="Stats/TedLead" to="." method="_on_TedLead_pressed"]
+[connection signal="pressed" from="Stats/SamLead" to="." method="_on_SamLead_pressed"]
+[connection signal="pressed" from="Stats/RoseLead" to="." method="_on_RoseLead_pressed"]
