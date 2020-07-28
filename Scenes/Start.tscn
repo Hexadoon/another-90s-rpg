@@ -88,33 +88,62 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Controls" type="Button" parent="Instructions/Instructions2"]
+margin_left = 10.0
+margin_top = 446.0
+margin_right = 75.0
+margin_bottom = 466.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Controls"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Characters" type="Button" parent="Instructions/Instructions2"]
+margin_left = 490.0
+margin_top = 446.0
+margin_right = 569.0
+margin_bottom = 466.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Characters"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="RichTextLabel" type="RichTextLabel" parent="Instructions"]
-margin_left = 24.0
+margin_left = 20.0
 margin_top = 18.0
-margin_right = 567.0
-margin_bottom = 461.0
+margin_right = 572.0
+margin_bottom = 441.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "
+text = "Characters:
 
-Controls:
+Madeline “Syringe” Gutierrez:
+Med student, obligatory cleric who has a “unique” style of healing. 90s college sorority girl style. Non med student hobbies: haha, hahahahahahahaha, oh you’re serious? Hahahahahaha.
+Special Attack, Syringe:
+Maddy uses her syringe to heal an ally a small amount
 
-Use the ARROW KEYS to Move
+Ted “Big Bat” Michaels:
+Baseball player, a kind hearted tank who is no slouch on offense. He tries very hard to look cool, but how cool can you really look in a highschool baseball uniform?. Non sports hobbies: Viddy games, bottle cap collecting, and playing the drums.
+Special Attack, Major League Baseball Featuring Ken Griffey Jr: 
+Ted swings his bat with all his might dealing more damage than usual
 
-Use SPACEBAR to interact with NPCs
+Sam “Cardmaster” Rosen:
+TCG playing kid, smart spellcaster who has a quick wit to match. Wears clothes his mom picked out for him. Non card collecting hobbies: Bugs, watching cartoons.
+Special Attack, Magnemite Lv. 13:
+Sam plays a card from his hand dealing low damage to all enemies
 
-Use ESCAPE to pause the game in the overworld and leave interfaces
-
-CLICK to select items in the Inn and see offers
-
-Get too close to an enemy and Combat will ensue!
-
-
-
-During combat:
-
-Press A with good timing to block an attack or deal extra damage
-
-CLICK on attack or special move during the player turn to choose what to do
-
-Use UP & DOWN ARROW KEYS to select a target"
+Rose “Silent Blade” Smith:
+Thinks she’s a ninja, good at debuffs and attacking enemy weaknesses. Uses her ordinary clothes to make herself look as much like a ninja as possible. Non ninja hobbies: Plants, gymnastics.
+Special Attack, Pocket Sand:
+Rose throws some sand from her pocket causing an enemy to lose a turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Buttons/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Instructions/Instructions2/Controls" to="." method="_on_Controls_pressed"]
+[connection signal="pressed" from="Instructions/Instructions2/Characters" to="." method="_on_Characters_pressed"]
