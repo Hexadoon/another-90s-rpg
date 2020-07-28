@@ -64,6 +64,13 @@ func _ready():
 	sprite = self.get_node("MaddySprite")
 	#changeLeader("Ted")
 	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
+	Global.setting="Town"
+	var scene = preload("res://Scenes/TownBackground.tscn")
+	var node = scene.instance()
+	self.get_parent().get_node("Background").add_child(node)
+	scene = preload("res://Scenes/TownForeground.tscn")
+	node = scene.instance()
+	self.get_parent().get_node("Foreground").add_child(node)
 
 func get_input():
 	velocity = Vector2()
@@ -99,7 +106,7 @@ func get_input():
 	velocity = velocity.normalized() * speed
 
 func _physics_process(delta):
-	if(incapacitated):
+	if(incapacitated and not Global.freeze):
 		invulnerable = false
 		self.position=lastheal
 		tedhp = tedmaxhp
