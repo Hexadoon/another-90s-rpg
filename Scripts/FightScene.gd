@@ -256,7 +256,8 @@ func _process(delta):
 					turn=0
 				if(not battleover):
 					done=playerdone
-				
+		if(turn==7 and done):
+			turn=0
 
 
 func setupMonsters(type):
@@ -493,6 +494,7 @@ func enemyattack(target):
 	if(player.rosehp==0 and Global.roseexist):
 		self.get_node("Heroes/Rose").visible=false
 	if(player.incapacitated):
+		Global.setting="NoFight"
 		self.queue_free()
 		Global.unfreeze()
 	self.get_node("Heroes/Maddy/RichTextLabel").set_text("Maddy HP"+str(player.maddyhp)+"\nMP"+str(player.maddymp))
@@ -930,6 +932,7 @@ func _on_Win_pressed():
 		self.get_node("RichTextLabel").set_text("ROSE LEVELED UP")
 		t.start()
 		yield(t, "timeout")
+	Global.setting="NoFight"
 	t.queue_free()
 	
 	
