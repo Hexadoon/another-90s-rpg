@@ -115,15 +115,15 @@ func _physics_process(delta):
 		rosehp=rosemaxhp
 		incapacitated=false
 		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
-	if Global.freeze:
-		if Input.is_action_just_released("ui_right"):
-			sprite.play("idleside")
-		if Input.is_action_just_released("ui_left"):
-			sprite.play("idleside")
-		if Input.is_action_just_released("ui_up"):
-			sprite.play("idleup")
-		if Input.is_action_just_released("ui_down"):
-			sprite.play("idledown")
+	#if Global.freeze:
+	#	if Input.is_action_just_released("ui_right"):
+	#		sprite.play("idleside")
+	#	if Input.is_action_just_released("ui_left"):
+	#		sprite.play("idleside")
+	#	if Input.is_action_just_released("ui_up"):
+	#		sprite.play("idleup")
+	#	if Input.is_action_just_released("ui_down"):
+	#		sprite.play("idledown")
 	if not Global.freeze:
 		get_input()
 		velocity = move_and_slide(velocity)
