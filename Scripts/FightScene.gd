@@ -1,9 +1,6 @@
 extends Node
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var player
 var sound
 var xpgain
@@ -17,6 +14,7 @@ var numturns
 var monstr
 var mondef
 var mondmg
+var sanded
 
 #MONSTER STATS SET DURING SETUPMONSTERS
 
@@ -44,9 +42,8 @@ func _ready():
 		numturns+=1
 	
 	turn = randi()%numturns
-	#print(str(turn))
-	turn=0
 	
+	sanded=-1
 	done=true
 	playerdone=true
 	if(player.tedhp==0):
@@ -62,6 +59,19 @@ func _process(delta):
 	if(not battleover):
 		if(turn==0 and done):
 			if(hp[0]<=0):
+				turn+=1
+				done=true
+			elif(sanded==0):
+				done=false
+				self.get_node("RichTextLabel").set_text("Monster 1 takes the sand out of its eyes!")
+				var t = Timer.new() 
+				t.set_wait_time(3)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				sanded=-1
 				turn+=1
 				done=true
 			else:
@@ -82,10 +92,22 @@ func _process(delta):
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				#turn+=1
-				#done=true
+
 		if(turn==1 and done):
 			if(hp[1]<=0):
+				turn+=1
+				done=true
+			elif(sanded==1):
+				done=false
+				self.get_node("RichTextLabel").set_text("Monster 2 takes the sand out of its eyes!")
+				var t = Timer.new() 
+				t.set_wait_time(3)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				sanded=-1
 				turn+=1
 				done=true
 			else:
@@ -106,10 +128,22 @@ func _process(delta):
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				#turn+=1
-				#done=true
+
 		if(turn==2 and done):
 			if(hp[2]<=0):
+				turn+=1
+				done=true
+			elif(sanded==2):
+				done=false
+				self.get_node("RichTextLabel").set_text("Monster 3 takes the sand out of its eyes!")
+				var t = Timer.new() 
+				t.set_wait_time(3)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				sanded=-1
 				turn+=1
 				done=true
 			else:
@@ -130,8 +164,7 @@ func _process(delta):
 				t.start()
 				yield(t, "timeout")
 				t.queue_free()
-				#turn+=1
-				#done=true
+
 		if(turn==3 and done):
 			if(player.tedhp<=0):
 				turn+=1
@@ -188,15 +221,11 @@ func _process(delta):
 					yield(t, "timeout")
 					t.queue_free()
 				turn+=1
-				#if(turn>numturns):
-				#	turn=0
 				if(not battleover):
 					done=playerdone
 		if(turn==5 and done):
 			if(player.samhp<=0 or Global.samexist==false):
 				turn+=1
-				#if(turn>numturns):
-				#	turn=0
 				playerdone=false
 				done=true
 			else:
@@ -227,8 +256,6 @@ func _process(delta):
 		if(turn==6 and done):
 			if(player.rosehp<=0 or Global.roseexist==false):
 				turn+=1
-				#if(turn>numturns):
-				#	turn=0
 				playerdone=false
 				done=true
 			else:
@@ -262,20 +289,22 @@ func _process(delta):
 
 func setupMonsters(type):
 	#TEMP METHOD, important for when we have more than 1 type of monster
-	xpgain = 5
-	gpgain = 5
+	
+	var modifier = (player.tedlvl+player.maddylvl)*1.5
+	if(Global.samexist):
+		modifier+=player.samlvl*1.5
+	if(Global.roseexist):
+		modifier+=player.roselvl*1.5
+	modifier=int(modifier)
+	hp[0]=max(3,randi()%modifier)
+	hp[1]=max(3,randi()%modifier)
+	hp[2]=max(3,randi()%modifier)
+	xpgain = max(5,randi()%modifier)
+	gpgain = max(5,randi()%modifier)
 	nummonsters = 3
 	monstr = 2
 	mondef = 2
-	mondmg=2
-	var modifier = (player.tedlvl+player.maddylvl)*3
-	if(Global.samexist):
-		modifier+=player.samlvl*3
-	if(Global.roseexist):
-		modifier+=player.roselvl*3
-	hp[0]=randi()%modifier+3
-	hp[1]=randi()%modifier+3
-	hp[2]=randi()%modifier+3
+	mondmg = 2
 	self.get_node("Enemies/Monster/RichTextLabel").set_text("HP"+str(hp[0]))
 	self.get_node("Enemies/Monster2/RichTextLabel").set_text("HP"+str(hp[1]))
 	self.get_node("Enemies/Monster3/RichTextLabel").set_text("HP"+str(hp[2]))	
@@ -466,9 +495,21 @@ func enemyattack(target):
 		self.get_node("Heroes/Sam/Sprite").play("idle")
 		t.queue_free()
 	elif(target=="Rose"):
+		if(t==.75):
+			self.get_node("Heroes/Rose/Sprite").play("block")
+		else:
+			self.get_node("Heroes/Rose/Sprite").play("hit")
 		var dmg = int(max(1,(monstr+mondmg-player.rosedef)*t))
 		player.dealDamage(dmg, target)
 		doDamageEffect(target,false)
+		t = Timer.new() 
+		t.set_wait_time(0.1)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		self.get_node("Heroes/Rose/Sprite").play("idle")
+		t.queue_free()
 	nodeuser.get_node("Sprite").set_flip_h(true)
 	nodeuser.get_node("Sprite").play("jump")
 	t = Timer.new() 
@@ -535,6 +576,15 @@ func playerattack(target,user):
 			nodeuser.get_node("Sprite").play("idle")
 		elif(user=="Rose"):
 			nodeuser=self.get_node("Heroes/Rose")
+			nodeuser.get_node("Sprite").play("jump")
+			var t = Timer.new() 
+			t.set_wait_time(1)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			nodeuser.get_node("Sprite").play("idle")
 		elif(user=="Sam" or user =="Samspecial"):
 			nodeuser=self.get_node("Heroes/Sam")
 		startpos=nodeuser.global_position
@@ -649,7 +699,6 @@ func playerattack(target,user):
 			t.queue_free()
 		elif(user=="Tedspecial"):
 			sound.set_stream(preload("res://Game Ready Sounds/Bat Hit.wav"))
-			#sound.play()
 			nodeuser.get_node("Sprite").play("special")
 			hp[target-1]-=int(max(1,(player.tedstr+player.tedweap-mondef)*1.75*t))
 			var hr =false
@@ -732,13 +781,25 @@ func playerattack(target,user):
 			yield(t, "timeout")
 			t.queue_free()
 		elif(user =="Rose"):
+			nodeuser.get_node("Sprite").play("attack")
 			sound.set_stream(preload("res://Game Ready Sounds/Toy Sword.wav"))
-			sound.play()
 			hp[target-1]-=int(max(1,(player.rosestr+player.roseweap-mondef)*t))
+			t = Timer.new() 
+			t.set_wait_time(0.3)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			sound.play()
+			t.start()
+			yield(t, "timeout")
 			doDamageEffect(target,true)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
 		if(not (user=="Sam" or user=="Samspecial")):
 			nodeuser.get_node("Sprite").set_flip_h(true)
-			if(user=="Maddy" or user=="Ted" or user=="Tedspecial"):
+			if(user=="Maddy" or user=="Rose" or user=="Ted" or user=="Tedspecial"):
 				nodeuser.get_node("Sprite").play("jump")
 			t = Timer.new() 
 			t.set_wait_time(1)
@@ -756,7 +817,7 @@ func playerattack(target,user):
 			yield(t, "timeout")
 			t.queue_free()
 			nodeuser.get_node("Sprite").set_flip_h(false)
-		if(user=="Maddy" or user=="Sam" or user == "Samspecial" or user=="Ted" or user=="Tedspecial"):
+		if(user=="Maddy" or user=="Rose" or user=="Sam" or user == "Samspecial" or user=="Ted" or user=="Tedspecial"):
 			nodeuser.get_node("Sprite").play("idle")
 
 	
@@ -838,7 +899,6 @@ func playerspecial(user, target):
 					nodetarget=self.get_node("Heroes/Sam")
 				if(target=="Rose"):
 					nodetarget=self.get_node("Heroes/Rose")
-				#nodeuser.get_node("Sprite").set_flip_h(true)
 				nodeuser.get_node("Sprite").play("jump")
 				var t = Timer.new() 
 				t.set_wait_time(1)
@@ -850,10 +910,8 @@ func playerspecial(user, target):
 				endpos=nodetarget.global_position
 				startpos=nodeuser.global_position
 				nodeuser.global_position.x=endpos.x+75
-				#nodeuser.global_position.x=endpos.x-75
 				nodeuser.global_position.y=endpos.y
 				nodeuser.get_node("Sprite").set_flip_h(true)
-				#nodeuser.get_node("Sprite").set_flip_h(false)
 				nodeuser.get_node("Sprite").play("special")
 				t.set_wait_time(0.6)
 				t.start()
@@ -882,15 +940,48 @@ func playerspecial(user, target):
 			self.get_node("RichTextLabel").set_text("Magnemite Lv 13!")
 			playerattack(0, "Samspecial")
 		if(user=="Rose"):
+			var i =0
+			self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+			var enter = false
+			while (not enter):
+				var t = Timer.new() 
+				t.set_wait_time(.1)
+				t.set_one_shot(true)
+				self.add_child(t)
+				t.start()
+				yield(t, "timeout")
+				t.queue_free()
+				enter=Input.is_key_pressed(KEY_ENTER)
+				if(Input.is_key_pressed(KEY_UP)):
+					i+=1
+					if(i>=3):
+						i=0
+					while(hp[i]<=0):
+						i+=1
+						if(i>=3):
+							i=0
+					self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+				if(Input.is_key_pressed(KEY_DOWN)):
+					i-=1
+					if(i<0):
+						i=2
+					while(hp[i]<=0):
+						i-=1
+						if(i<0):
+							i=2
+					self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
+			sanded=i
 			sound.set_stream(preload("res://Game Ready Sounds/Pocket Sand.wav"))
+			self.get_node("Heroes/Rose/Sprite").play("special")
 			sound.play()
-			self.get_node("RichTextLabel").set_text("Rose throws pocket sand??? I DIDN'T CODE THIS YET D:")
+			self.get_node("RichTextLabel").set_text("Rose throws pocket sand!")
 			var t = Timer.new() 
 			t.set_wait_time(1.5)
 			t.set_one_shot(true)
 			self.add_child(t)
 			t.start()
 			yield(t, "timeout")
+			self.get_node("Heroes/Rose/Sprite").play("idle")
 			playerdone=true
 		self.get_node("Heroes/Maddy/RichTextLabel").set_text("Maddy HP"+str(player.maddyhp)+"\nMP"+str(player.maddymp))
 		self.get_node("Heroes/Ted/RichTextLabel").set_text("Ted HP"+str(player.tedhp)+"\nMP"+str(player.tedmp))
@@ -1155,6 +1246,4 @@ func _on_PlayerSpecial_pressed():
 
 func _on_MonsterAttack_pressed():
 	var target = randomHero()
-	#target="Sam"
 	enemyattack(target)
-	pass # Replace with function body.
