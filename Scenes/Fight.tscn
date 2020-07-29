@@ -1,11 +1,11 @@
-[gd_scene load_steps=102 format=2]
+[gd_scene load_steps=138 format=2]
 
 [ext_resource path="res://Scripts/FightScene.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Battle/battle_screen_2_UI_box.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Battle/mushroombattle/mushroom_battle_attack4.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Battle/tedbattle/ted_battle_animation_idle5.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Battle/sambattle/Sam_battle_idle8.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Battle/rose_battle_idle.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle8.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle2.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Battle/battle_screen_v2.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Battle/maddybattle/mad_battle_animation_idle4.png" type="Texture" id=9]
@@ -96,6 +96,41 @@
 [ext_resource path="res://Assets/Battle/sambattle/Sam_cast1.png" type="Texture" id=94]
 [ext_resource path="res://Assets/Battle/sambattle/Sam_cast2.png" type="Texture" id=95]
 [ext_resource path="res://Assets/Battle/sambattle/Sam_cast3.png" type="Texture" id=96]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle3.png" type="Texture" id=97]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle1.png" type="Texture" id=98]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle4.png" type="Texture" id=99]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle7.png" type="Texture" id=100]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle2.png" type="Texture" id=101]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle5.png" type="Texture" id=102]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_idle6.png" type="Texture" id=103]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport6.png" type="Texture" id=104]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport9.png" type="Texture" id=105]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport8.png" type="Texture" id=106]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport7.png" type="Texture" id=107]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport4.png" type="Texture" id=108]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport1.png" type="Texture" id=109]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport3.png" type="Texture" id=110]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport5.png" type="Texture" id=111]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_teleport2.png" type="Texture" id=112]
+[ext_resource path="res://Assets/Battle/rosebattle/IMG_4990.PNG" type="Texture" id=113]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack2.png" type="Texture" id=114]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack1.png" type="Texture" id=115]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack4.png" type="Texture" id=116]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack3.png" type="Texture" id=117]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack5.png" type="Texture" id=118]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_attack6.png" type="Texture" id=119]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand1.png" type="Texture" id=120]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand2.png" type="Texture" id=121]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand4.png" type="Texture" id=122]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand5.png" type="Texture" id=123]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand3.png" type="Texture" id=124]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand6.png" type="Texture" id=125]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand10.png" type="Texture" id=126]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand9.png" type="Texture" id=127]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand7.png" type="Texture" id=128]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_pocket_sand8.png" type="Texture" id=129]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_hit.png" type="Texture" id=130]
+[ext_resource path="res://Assets/Battle/rosebattle/rose_battle_block.png" type="Texture" id=131]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -106,6 +141,11 @@ animations = [ {
 "name": "idle",
 "speed": 8.0
 }, {
+"frames": [ ExtResource( 67 ), ExtResource( 68 ), ExtResource( 61 ), ExtResource( 74 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "attack",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 67 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 70 ), ExtResource( 63 ), ExtResource( 73 ), ExtResource( 73 ), ExtResource( 73 ), ExtResource( 73 ), ExtResource( 73 ), ExtResource( 60 ), ExtResource( 71 ), ExtResource( 69 ) ],
 "loop": false,
 "name": "jump",
@@ -115,57 +155,100 @@ animations = [ {
 "loop": true,
 "name": "hit",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 67 ), ExtResource( 68 ), ExtResource( 61 ), ExtResource( 74 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 3 ) ],
-"loop": false,
-"name": "attack",
-"speed": 10.0
 } ]
 
 [sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 98 ), ExtResource( 101 ), ExtResource( 97 ), ExtResource( 99 ), ExtResource( 102 ), ExtResource( 103 ), ExtResource( 100 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "idle",
+"speed": 9.0
+}, {
+"frames": [ ExtResource( 131 ) ],
+"loop": true,
+"name": "block",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 98 ), ExtResource( 120 ), ExtResource( 121 ), ExtResource( 124 ), ExtResource( 122 ), ExtResource( 123 ), ExtResource( 125 ), ExtResource( 128 ), ExtResource( 129 ), ExtResource( 127 ), ExtResource( 126 ) ],
+"loop": false,
+"name": "special",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 98 ), ExtResource( 115 ), ExtResource( 114 ), ExtResource( 117 ), ExtResource( 116 ), ExtResource( 118 ), ExtResource( 119 ) ],
+"loop": false,
+"name": "attack",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 98 ), ExtResource( 109 ), ExtResource( 112 ), ExtResource( 110 ), ExtResource( 108 ), ExtResource( 111 ), ExtResource( 104 ), ExtResource( 107 ), ExtResource( 106 ), ExtResource( 113 ), ExtResource( 113 ), ExtResource( 105 ), ExtResource( 105 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 130 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "idle",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 15 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
-"loop": false,
-"name": "jump",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
 "loop": false,
 "name": "selfheal",
 "speed": 10.0
-}, {
-"frames": [ ExtResource( 29 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 30 ) ],
 "loop": true,
 "name": "block",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 12 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 26 ) ],
+"loop": false,
+"name": "special",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 12 ), ExtResource( 24 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 23 ), ExtResource( 23 ) ],
 "loop": false,
 "name": "attack",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 26 ) ],
+"frames": [ ExtResource( 15 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
 "loop": false,
-"name": "special",
+"name": "jump",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 29 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 40 ), ExtResource( 40 ), ExtResource( 40 ), ExtResource( 38 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 37 ), ExtResource( 37 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "idle",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 53 ) ],
+"loop": true,
+"name": "block",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 55 ), ExtResource( 59 ), ExtResource( 57 ), ExtResource( 58 ), ExtResource( 51 ) ],
+"loop": true,
+"name": "special",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 47 ), ExtResource( 49 ), ExtResource( 48 ), ExtResource( 50 ), ExtResource( 51 ), ExtResource( 51 ) ],
+"loop": false,
+"name": "attack",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 43 ), ExtResource( 43 ), ExtResource( 41 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 42 ), ExtResource( 46 ), ExtResource( 42 ), ExtResource( 46 ), ExtResource( 46 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 40 ) ],
 "loop": false,
@@ -176,33 +259,13 @@ animations = [ {
 "loop": true,
 "name": "hit",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 53 ) ],
-"loop": true,
-"name": "block",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 47 ), ExtResource( 49 ), ExtResource( 48 ), ExtResource( 50 ), ExtResource( 51 ), ExtResource( 51 ) ],
-"loop": false,
-"name": "attack",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 55 ), ExtResource( 59 ), ExtResource( 57 ), ExtResource( 58 ), ExtResource( 51 ) ],
-"loop": true,
-"name": "special",
-"speed": 10.0
 } ]
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ ExtResource( 78 ), ExtResource( 81 ), ExtResource( 79 ), ExtResource( 82 ), ExtResource( 78 ), ExtResource( 81 ), ExtResource( 79 ), ExtResource( 82 ), ExtResource( 77 ), ExtResource( 80 ), ExtResource( 76 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 88 ) ],
-"loop": true,
-"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 89 ) ],
@@ -210,15 +273,20 @@ animations = [ {
 "name": "block",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 78 ), ExtResource( 94 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 90 ), ExtResource( 91 ), ExtResource( 92 ), ExtResource( 93 ) ],
+"loop": false,
+"name": "special",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 78 ), ExtResource( 83 ), ExtResource( 84 ), ExtResource( 85 ), ExtResource( 86 ), ExtResource( 87 ) ],
 "loop": false,
 "name": "attack",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 78 ), ExtResource( 94 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 90 ), ExtResource( 91 ), ExtResource( 92 ), ExtResource( 93 ) ],
-"loop": false,
-"name": "special",
-"speed": 8.0
+"frames": [ ExtResource( 88 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
 } ]
 
 [node name="Node2D" type="Node2D"]
@@ -249,7 +317,6 @@ shape = SubResource( 1 )
 scale = Vector2( 2.1, 2.1 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 3
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster"]
@@ -276,7 +343,6 @@ shape = SubResource( 1 )
 scale = Vector2( 2.1, 2.1 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 3
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster2"]
@@ -302,7 +368,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2.1, 2.1 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Enemies/Monster3"]
@@ -318,7 +384,6 @@ __meta__ = {
 [node name="Heroes" type="Node2D" parent="."]
 
 [node name="Rose" type="KinematicBody2D" parent="Heroes"]
-visible = false
 position = Vector2( 331.724, 126.447 )
 __meta__ = {
 "_edit_group_": true
@@ -327,9 +392,12 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Heroes/Rose"]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Heroes/Rose"]
+[node name="Sprite" type="AnimatedSprite" parent="Heroes/Rose"]
 scale = Vector2( 2.1, 2.1 )
-texture = ExtResource( 6 )
+frames = SubResource( 3 )
+animation = "idle"
+frame = 5
+playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Rose"]
 margin_left = -57.9385
@@ -354,9 +422,9 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Heroes/Maddy"]
 scale = Vector2( 2.1, 2.1 )
-frames = SubResource( 3 )
+frames = SubResource( 4 )
 animation = "idle"
-frame = 3
+frame = 11
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Maddy"]
@@ -382,9 +450,9 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Heroes/Ted"]
 scale = Vector2( 2.1, 2.1 )
-frames = SubResource( 4 )
+frames = SubResource( 5 )
 animation = "idle"
-frame = 2
+frame = 4
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Ted"]
@@ -411,9 +479,9 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Heroes/Sam"]
 scale = Vector2( 2.1, 2.1 )
-frames = SubResource( 5 )
+frames = SubResource( 6 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Heroes/Sam"]
