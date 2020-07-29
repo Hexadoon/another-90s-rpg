@@ -22,7 +22,7 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Installation
 
-- The playable files can be found [here](https://drive.google.com/file/d/1j2C7diTB_w5YYkwKgG2aJ804S9q_Ny9T/view?usp=sharing)
+- The playable files can be found [here]()
 
 ## Controls
 
