@@ -20,7 +20,7 @@ func _input(event):
 			leave()
 
 func leave():
-	Global.freeze = false
+	Global.unfreeze()
 	if transaction == 0:
 		player.doTransaction(10, false)
 		player.heal(5)
