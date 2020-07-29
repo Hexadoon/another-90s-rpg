@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-var gp = 200
+var gp = 100
 
 var tedmaxhp = 10
 var tedhp = 10
-var tedxp = 5
+var tedxp = 0
 var tedspd = 5
 var tedmaxmp = 8
 var tedmp = 8
@@ -16,7 +16,7 @@ var tednxtlvl = 10
 
 var maddymaxhp = 8
 var maddyhp = 8
-var maddyxp = 5
+var maddyxp = 0
 var maddyspd = 5
 var maddymaxmp = 15
 var maddymp = 15
@@ -52,11 +52,13 @@ var rosenxtlvl = 10
 
 var incapacitated = false
 var invulnerable = false
+var justfroze=false
 var lastheal = Vector2()
 
 var velocity = Vector2()
 var speed = 300
 var sprite
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -115,17 +117,19 @@ func _physics_process(delta):
 		rosehp=rosemaxhp
 		incapacitated=false
 		self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
-	#if Global.freeze:
-	#	if Input.is_action_just_released("ui_right"):
-	#		sprite.play("idleside")
-	#	if Input.is_action_just_released("ui_left"):
-	#		sprite.play("idleside")
-	#	if Input.is_action_just_released("ui_up"):
-	#		sprite.play("idleup")
-	#	if Input.is_action_just_released("ui_down"):
-	#		sprite.play("idledown")
+	if Global.freeze and justfroze:
+		justfroze=false
+		if Input.is_action_pressed("ui_right"):
+			sprite.play("idleside")
+		if Input.is_action_pressed("ui_left"):
+			sprite.play("idleside")
+		if Input.is_action_pressed("ui_up"):
+			sprite.play("idleup")
+		if Input.is_action_pressed("ui_down"):
+			sprite.play("idledown")
 	if not Global.freeze:
 		get_input()
+		justfroze=true
 		velocity = move_and_slide(velocity)
 
 func changeLeader(lead):
@@ -157,6 +161,8 @@ func lvlup(target):
 		tedspd+=randi()%2
 		tednxtlvl = 2*tednxtlvl
 		tedlvl+=1
+		tedhp=tedmaxhp
+		tedmp=tedmaxmp
 	elif(target=="Maddy"):
 		maddymaxhp+=1
 		maddymaxmp+=3
@@ -165,6 +171,8 @@ func lvlup(target):
 		maddyspd+=randi()%2
 		maddynxtlvl = 2*maddynxtlvl
 		maddylvl+=1
+		maddyhp=maddymaxhp
+		maddymp=maddymaxmp
 	elif(target=="Rose"):
 		rosemaxhp+=2
 		rosemaxmp+=2
@@ -173,6 +181,8 @@ func lvlup(target):
 		rosespd+=randi()%2
 		rosenxtlvl=2*rosenxtlvl
 		roselvl+=1
+		rosehp=rosemaxhp
+		rosemp=rosemaxmp
 	elif(target=="Sam"):
 		sammaxhp+=1
 		sammaxhp+=3
@@ -181,6 +191,8 @@ func lvlup(target):
 		samspd+=randi()%2
 		samnxtlvl=2*samnxtlvl
 		samlvl+=1
+		samhp=sammaxhp
+		sammp=sammaxmp
 
 func dealDamage(damage, target):
 	if(target=="Ted"):
@@ -283,6 +295,10 @@ func heal(amount):
 	healchar(amount, "Maddy")
 	healchar(amount, "Sam")
 	healchar(amount, "Rose")
+	restoreMP(amount, "Ted")
+	restoreMP(amount, "Maddy")
+	restoreMP(amount, "Sam")
+	restoreMP(amount, "Rose")
 	self.get_node("Display/CanvasLayer/Labels").set_text("Ted HP:"+(str(tedhp)+"\n"+"Maddy HP:"+(str(maddyhp))+"\n"+"GP:"+str(gp)))
 
 func resetHealth():
@@ -306,7 +322,6 @@ func doTransaction(amount, type) ->bool:
 		return true
 	else:
 		if gp<amount:
-			print("failed transaction")
 			return false
 		else:
 			gp-=amount
