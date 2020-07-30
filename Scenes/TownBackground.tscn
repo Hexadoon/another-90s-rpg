@@ -1,13 +1,12 @@
 [gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_passive.png" type="Texture" id=1]
-[ext_resource path="res://Assets/temp_bg1.png" type="Texture" id=2]
-[ext_resource path="res://Assets/suburs_beta_1_mockup.png" type="Texture" id=3]
+[ext_resource path="res://Assets/suburbs_2_backgrounds_only.png" type="Texture" id=2]
+[ext_resource path="res://Assets/suburbs_2_houses_only.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation1.png" type="Texture" id=4]
-[ext_resource path="res://Assets/forest_path_a1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/thorns.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation_active.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation2.png" type="Texture" id=7]
-[ext_resource path="res://Assets/temp_spikes.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overworld_passive.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation1.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation2.png" type="Texture" id=11]
@@ -15,15 +14,15 @@
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation_active.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation3.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Rose/Rose_overworld_idle_down.png" type="Texture" id=16]
 [ext_resource path="res://Scripts/SpawnMonsters.gd" type="Script" id=17]
-[ext_resource path="res://Assets/Battle/rose_battle_idle.png" type="Texture" id=18]
 [ext_resource path="res://Scripts/ManageRose.gd" type="Script" id=19]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 2.78403, 10 )
+extents = Vector2( 4.35348, 10 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 19.3484, 10 )
+extents = Vector2( 38.915, 10 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10.7639, 10 )
@@ -33,6 +32,9 @@ extents = Vector2( 10.9448, 10 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 31.5824, 31.5772 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 204.505, 21.7013 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 25.5587, 31.1709 )
@@ -44,20 +46,20 @@ animations = [ {
 "name": "popup",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "redpassive",
-"speed": 5.0
+"frames": [ ExtResource( 10 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 6 ) ],
+"loop": false,
+"name": "redpopup",
+"speed": 15.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "passive",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 10 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 6 ) ],
-"loop": false,
-"name": "redpopup",
-"speed": 15.0
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "redpassive",
+"speed": 5.0
 } ]
 
 [sub_resource type="SpriteFrames" id=8]
@@ -72,36 +74,26 @@ animations = [ {
 "name": "popup",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 18 ) ],
+"frames": [ ExtResource( 16 ) ],
 "loop": true,
 "name": "rose",
 "speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 22.4089, 17.8874 )
+extents = Vector2( 12.3773, 15.1183 )
 
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 38.8631, 51.706 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="temp_bg1" type="Sprite" parent="."]
-position = Vector2( 1650.84, 962.828 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="forest_path_a1" type="Sprite" parent="temp_bg1"]
-visible = false
-position = Vector2( -895.783, -608.968 )
-scale = Vector2( 2.1, 2.1 )
-texture = ExtResource( 5 )
-
-[node name="suburs_beta_1_mockup" type="Sprite" parent="temp_bg1"]
-position = Vector2( -1052.94, -386.626 )
+[node name="street" type="Sprite" parent="."]
+position = Vector2( 1472.04, 577.782 )
 scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="houses" type="Sprite" parent="street"]
 texture = ExtResource( 3 )
 
 [node name="WorldBorder" type="Node2D" parent="."]
@@ -109,144 +101,170 @@ texture = ExtResource( 3 )
 [node name="StaticBody2D" type="StaticBody2D" parent="WorldBorder"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorder/StaticBody2D"]
-position = Vector2( 1653.68, -119.488 )
+position = Vector2( 1663.76, 31.7026 )
 scale = Vector2( 700, 1 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBorder/StaticBody2D"]
-position = Vector2( 1642.45, 2046.63 )
+position = Vector2( 410.627, 1221.18 )
 scale = Vector2( 100, 1 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBorder/StaticBody2D"]
-position = Vector2( -275.294, 946.825 )
+position = Vector2( -1335.68, 937.301 )
 rotation = 1.5708
 scale = Vector2( 100, 1 )
 shape = SubResource( 3 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBorder/StaticBody2D"]
-position = Vector2( 3575, 950 )
+position = Vector2( 4275, 930 )
 rotation = 1.5708
 scale = Vector2( 100, 1 )
 shape = SubResource( 4 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+polygon = PoolVector2Array( -1066.87, 651.14, -513.758, 647.364, -506.207, 366.09, -679.88, 369.865, -676.105, 288.692, -1072.53, 284.916 )
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+position = Vector2( 2887.98, -4.75671 )
+build_mode = 1
+polygon = PoolVector2Array( 548.332, 385.133, 543.837, 659.323, 1057.76, 659.323, 1060.75, 588.902, 1177.62, 588.902, 1183.61, 385.133, 1062.25, 350.672, 1062.25, 311.716, 732.624, 310.217, 734.122, 379.139 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+position = Vector2( 2887.98, -4.75671 )
+polygon = PoolVector2Array( -1066.87, 651.14, -513.758, 647.364, -506.207, 366.09, -679.88, 369.865, -676.105, 288.692, -1072.53, 284.916 )
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+polygon = PoolVector2Array( 2708.46, 406.816, 2712.03, 664.874, 3143.71, 668.442, 3146.09, 408.005, 3077.11, 402.059, 3077.11, 284.328, 2928.46, 193.948, 2784.57, 281.95, 2783.38, 408.005 )
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+polygon = PoolVector2Array( 1123.03, 607.292, 1223.04, 607.292, 1223.04, 645.39, 1423.05, 646.977, 1426.23, 586.656, 1673.86, 591.418, 1675.45, 400.93, 1442.1, 396.168, 1267.49, 227.903, 1118.27, 372.357 )
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+polygon = PoolVector2Array( 862.833, 600.758, 353.716, 599.344, 348.059, 286.803, 555.949, 286.803, 604.032, 230.234, 654.944, 288.217, 691.713, 289.631, 693.128, 371.656, 882.632, 412.668, 882.632, 507.42, 864.247, 508.834 )
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="WorldBorder/StaticBody2D"]
+polygon = PoolVector2Array( -332.169, 621.094, 129.831, 627.094, 127.831, 305.094, -30.1689, 309.094, -30.1689, 221.094, -90.1689, 193.094, -154.169, 221.094, -158.169, 311.094, -338.169, 307.094 )
 
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Damage" type="Node2D" parent="Items"]
 
 [node name="Spikes" type="Area2D" parent="Items/Damage"]
-position = Vector2( 1393.42, 1021.74 )
+position = Vector2( 1977.89, 817.747 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes"]
 shape = SubResource( 5 )
 
 [node name="Spikes2" type="Area2D" parent="Items/Damage"]
-position = Vector2( 308.944, 1353.84 )
+position = Vector2( -388.928, 583.5 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes2"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes2"]
 shape = SubResource( 5 )
 
 [node name="Spikes3" type="Area2D" parent="Items/Damage"]
-position = Vector2( 906.48, 1163.2 )
+position = Vector2( 2409.28, 678.538 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes3"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes3"]
 shape = SubResource( 5 )
 
 [node name="Spikes4" type="Area2D" parent="Items/Damage"]
-position = Vector2( 957.482, 1418.78 )
+position = Vector2( 1727.56, 643.539 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes4"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes4"]
 shape = SubResource( 5 )
 
 [node name="Spikes5" type="Area2D" parent="Items/Damage"]
-position = Vector2( 548.169, 1172.21 )
+position = Vector2( 512.36, 680.137 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes5"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes5"]
 shape = SubResource( 5 )
 
 [node name="Spikes6" type="Area2D" parent="Items/Damage"]
-position = Vector2( 825.656, 1778.1 )
+position = Vector2( 2442.66, 909.832 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes6"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes6"]
 shape = SubResource( 5 )
 
 [node name="Spikes7" type="Area2D" parent="Items/Damage"]
-position = Vector2( 1405.94, 1269.7 )
+position = Vector2( 4108.98, 613.892 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes7"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes7"]
 shape = SubResource( 5 )
 
 [node name="Spikes8" type="Area2D" parent="Items/Damage"]
-position = Vector2( 496.069, 1475.86 )
+position = Vector2( 901.82, 811.488 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes8"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes8"]
 shape = SubResource( 5 )
 
 [node name="Spikes9" type="Area2D" parent="Items/Damage"]
-position = Vector2( 345.165, 1079.51 )
+position = Vector2( 67.0378, 667.293 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes9"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 8 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes9"]
 shape = SubResource( 5 )
@@ -255,17 +273,18 @@ shape = SubResource( 5 )
 
 [node name="Heal2" type="StaticBody2D" parent="Items/Inn"]
 modulate = Color( 0.219608, 1, 0, 1 )
-position = Vector2( 3064.5, 285.377 )
+position = Vector2( 2930.85, 648.43 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Inn/Heal2"]
+visible = false
 modulate = Color( 1, 0.972549, 0.254902, 1 )
 texture = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Inn/Heal2"]
-shape = SubResource( 5 )
+shape = SubResource( 11 )
 
 [node name="Monsters" type="Node2D" parent="Items"]
 
@@ -273,7 +292,7 @@ shape = SubResource( 5 )
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner"]
-position = Vector2( 1151.94, 628.559 )
+position = Vector2( 990.935, 670.741 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -287,11 +306,29 @@ frames = SubResource( 7 )
 animation = "passive"
 playing = true
 
+[node name="MushroomSpawner5" type="Node2D" parent="Items/Monsters"]
+script = ExtResource( 17 )
+
+[node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner5"]
+position = Vector2( 807.022, 218.321 )
+scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Monsters/MushroomSpawner5/Monster"]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Items/Monsters/MushroomSpawner5/Monster"]
+frames = SubResource( 7 )
+animation = "passive"
+playing = true
+
 [node name="MushroomSpawner2" type="Node2D" parent="Items/Monsters"]
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner2"]
-position = Vector2( 199.132, 708.313 )
+position = Vector2( -25.1211, 745.688 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -309,7 +346,7 @@ playing = true
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner3"]
-position = Vector2( 1048.87, 130.935 )
+position = Vector2( 2319.64, 232.383 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -327,7 +364,7 @@ playing = true
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner4"]
-position = Vector2( 423.774, 101.561 )
+position = Vector2( 438.452, 202.421 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -342,7 +379,7 @@ animation = "passive"
 playing = true
 
 [node name="Rose" type="StaticBody2D" parent="Items"]
-position = Vector2( 807.037, 138.407 )
+position = Vector2( 3450.61, 788.045 )
 scale = Vector2( 2, 2 )
 script = ExtResource( 19 )
 __meta__ = {
@@ -355,11 +392,14 @@ playing = true
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Rose"]
-position = Vector2( 0.353546, 1.41422 )
+position = Vector2( 0.354, 4 )
 shape = SubResource( 9 )
 
 [node name="Forestpath" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Forestpath"]
-position = Vector2( 636.411, 8.29423 )
+position = Vector2( 633.047, 63.7934 )
 shape = SubResource( 10 )
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 4280.67, 1216.22 )
