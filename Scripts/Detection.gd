@@ -4,9 +4,11 @@ extends RayCast2D
 
 var processing = false
 var pausescreen = false
+var camera
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	camera = self.get_parent().get_node("Display")
 	set_enabled(true)
 	pass # Replace with function body.
 
@@ -22,21 +24,27 @@ func _input(event):
 			if(self.get_collider().name=="Sam"):
 				Global.freeze=true
 				Global.samexist=true
+				var text = self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText")
+				var texture = preload("res://Assets/Sam/sam_overworld_idle_down.png")
+				self.get_collider().get_node("Sprite").set_texture(texture)
 				self.get_parent().get_node("Display/CanvasLayer/TextBox").visible=true
 				self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Madeline: Sam! There you are!")
 				var t = Timer.new() #time spent being invulnerable
-				t.set_wait_time(4)
+				t.set_wait_time(text.text.length()/20)
 				t.set_one_shot(true)
 				self.add_child(t)
 				t.start()
 				yield(t, "timeout")
 				self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Sam: Have you seen my Magnemite card? I think I dropped it when I was looking for my De-Spell card...")
+				t.set_wait_time(text.text.length()/20)
 				t.start()
 				yield(t, "timeout")
 				self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Madeline: Sam, you can't go running off into the woods alone to look for a card! You could get yourself killed!")
+				t.set_wait_time(text.text.length()/20)
 				t.start()
 				yield(t, "timeout")
 				self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Sam Joined the Party!")
+				t.set_wait_time(text.text.length()/20)
 				t.start()
 				yield(t, "timeout")
 				self.get_parent().get_node("Display/CanvasLayer/TextBox").visible=false
@@ -49,24 +57,29 @@ func _input(event):
 				if(Global.samexist):
 					Global.freeze=true
 					Global.roseexist=true
+					var text = self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox").visible=true
-					self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Rose: Heh, did you think I was a mushroom before?")
+					text.set_text("Rose: Heh, did you think I was a mushroom before?")
 					var t = Timer.new() #time spent being invulnerable
-					t.set_wait_time(3)
+					t.set_wait_time(text.text.length()/20)
 					t.set_one_shot(true)
 					self.add_child(t)
 					t.start()
 					yield(t, "timeout")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Madeline: You were a very convincing mushroom")
+					t.set_wait_time(text.text.length()/20)
 					t.start()
 					yield(t, "timeout")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Rose: Think I could trick real monsters with my ninja skills?")
+					t.set_wait_time(text.text.length()/20)
 					t.start()
 					yield(t, "timeout")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Madeline: If you're going to try, be careful, okay?")
+					t.set_wait_time(text.text.length()/20)
 					t.start()
 					yield(t, "timeout")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox/TextBoxText").set_text("Rose Joined the Party!")
+					t.set_wait_time(text.text.length()/20)
 					t.start()
 					yield(t, "timeout")
 					self.get_parent().get_node("Display/CanvasLayer/TextBox").visible=false
@@ -126,8 +139,11 @@ func _process(delta):
 			node = scene.instance()
 			self.get_parent().get_parent().get_node("Foreground").add_child(node)
 			self.get_parent().position=Vector2(747,1900)
+			camera.limit_bottom=1998
+			camera.limit_left=251
+			camera.limit_right=1294
+			camera.limit_top=-112
 		elif(self.get_collider().name=="Townpath"):
-			print(str(self.get_parent().position))
 			Global.setting="Town"
 			self.get_parent().get_parent().get_node("Background").get_child(0).queue_free()
 			var scene = preload("res://Scenes/TownBackground.tscn")
@@ -138,5 +154,9 @@ func _process(delta):
 			node = scene.instance()
 			self.get_parent().get_parent().get_node("Foreground").add_child(node)
 			self.get_parent().position=Vector2(601,133)
-
+			camera.limit_bottom=1200
+			camera.limit_left=-1330
+			camera.limit_right=4280
+			camera.limit_top=31
+			
 		processing = false
