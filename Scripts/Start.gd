@@ -1,9 +1,6 @@
 extends Node2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var textbox
 var controlstext = "Controls:\n\nUse the ARROW KEYS to Move\n\nUse SPACEBAR to interact with NPCs\n\nUse ESCAPE to pause the game in the overworld and leave interfaces\n\nCLICK to select items in the Inn and see offers\n\nGet too close to an enemy and Combat will ensue!\n\n\n\nDuring combat:\n\nPress A with good timing to block an attack or deal extra damage\n\nCLICK on attack or special move during the player turn to choose what to do\n\nUse UP & DOWN ARROW KEYS to select a target"
 
@@ -15,9 +12,6 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 
 func _on_Button_pressed():
