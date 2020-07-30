@@ -1023,7 +1023,6 @@ func _on_Win_pressed():
 		self.get_node("RichTextLabel").set_text("ROSE LEVELED UP")
 		t.start()
 		yield(t, "timeout")
-	Global.setting="NoFight"
 	t.queue_free()
 	
 	
@@ -1036,6 +1035,7 @@ func _on_Win_pressed():
 		player.healchar(1,"Sam")
 	if(player.rosehp==0):
 		player.healchar(1,"Rose")
+	Global.setting="NoFight"
 	self.queue_free()
 
 
