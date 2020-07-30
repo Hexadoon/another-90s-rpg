@@ -1,9 +1,6 @@
 extends AudioStreamPlayer
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var setting
 var isfight
 
@@ -25,8 +22,9 @@ func _process(delta):
 		setmusic(setting)
 	else:
 		if(not Global.setting == setting):
-			setting=Global.setting
-			setmusic(setting)
+			if(Global.setting!="Fight" and Global.setting!="NoFight"):
+					setting=Global.setting
+					setmusic(setting)
 		
 
 func setmusic(setting):
@@ -40,6 +38,3 @@ func setmusic(setting):
 		self.set_stream(preload("res://Game Ready Sounds/SpiritedForest.wav"))
 		self.play()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
