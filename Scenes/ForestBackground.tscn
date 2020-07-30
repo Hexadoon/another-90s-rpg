@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/forest_path_a1.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation_active.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation2.png" type="Texture" id=7]
-[ext_resource path="res://Assets/temp_spikes.png" type="Texture" id=8]
+[ext_resource path="res://Assets/thorns.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overworld_passive.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Mushroom2/mushroom2_overworld_animation1.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation2.png" type="Texture" id=11]
@@ -15,7 +15,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation_active.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Mushroom1/mushroom_overwolrd_animation3.png" type="Texture" id=15]
-[ext_resource path="res://Assets/Battle/sam_battle_idle.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Sam/sam_overworld_idle_up.png" type="Texture" id=16]
 [ext_resource path="res://Scripts/SpawnMonsters.gd" type="Script" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -43,20 +43,20 @@ animations = [ {
 "name": "popup",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "redpassive",
-"speed": 5.0
+"frames": [ ExtResource( 10 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 6 ) ],
+"loop": false,
+"name": "redpopup",
+"speed": 15.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "passive",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 10 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 6 ) ],
-"loop": false,
-"name": "redpopup",
-"speed": 15.0
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "redpassive",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=8]
@@ -68,22 +68,23 @@ extents = Vector2( 123.39, 51.706 )
 [node name="Node2D" type="Node2D"]
 
 [node name="temp_bg1" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 1650.84, 962.828 )
 texture = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="forest_path_a1" type="Sprite" parent="temp_bg1"]
-position = Vector2( -876.734, -31.1538 )
-scale = Vector2( 2.1, 2.1 )
-texture = ExtResource( 5 )
-
 [node name="suburs_beta_1_mockup" type="Sprite" parent="temp_bg1"]
 visible = false
 position = Vector2( -1052.94, -386.626 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
+
+[node name="forest_path_a1" type="Sprite" parent="."]
+position = Vector2( 774.106, 931.674 )
+scale = Vector2( 2.1, 2.1 )
+texture = ExtResource( 5 )
 
 [node name="WorldBorder" type="Node2D" parent="."]
 
@@ -116,13 +117,13 @@ shape = SubResource( 4 )
 [node name="Damage" type="Node2D" parent="Items"]
 
 [node name="Spikes" type="Area2D" parent="Items/Damage"]
-position = Vector2( 850.975, 797.134 )
+position = Vector2( 840.272, 828.053 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes"]
@@ -135,99 +136,156 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes2"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes2"]
 shape = SubResource( 5 )
 
 [node name="Spikes3" type="Area2D" parent="Items/Damage"]
-position = Vector2( 906.48, 1163.2 )
+position = Vector2( 875.367, 1153.3 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes3"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes3"]
 shape = SubResource( 5 )
 
 [node name="Spikes4" type="Area2D" parent="Items/Damage"]
-position = Vector2( 940.531, 422.885 )
+position = Vector2( 925.778, 544.848 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes4"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes4"]
 shape = SubResource( 5 )
 
 [node name="Spikes5" type="Area2D" parent="Items/Damage"]
-position = Vector2( 840.581, 600.1 )
+position = Vector2( 635.436, 655.66 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes5"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes5"]
 shape = SubResource( 5 )
 
+[node name="Spikes10" type="Area2D" parent="Items/Damage"]
+position = Vector2( 450.505, 638.576 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Items/Damage/Spikes10"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes10"]
+shape = SubResource( 5 )
+
+[node name="Spikes11" type="Area2D" parent="Items/Damage"]
+position = Vector2( 404.163, 563.26 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Items/Damage/Spikes11"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes11"]
+shape = SubResource( 5 )
+
+[node name="Spikes13" type="Area2D" parent="Items/Damage"]
+position = Vector2( 1144.06, 484.889 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Items/Damage/Spikes13"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes13"]
+shape = SubResource( 5 )
+
+[node name="Spikes12" type="Area2D" parent="Items/Damage"]
+position = Vector2( 1097.87, 549.837 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Items/Damage/Spikes12"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes12"]
+shape = SubResource( 5 )
+
 [node name="Spikes6" type="Area2D" parent="Items/Damage"]
-position = Vector2( 1168.92, 1053.43 )
+position = Vector2( 1134.94, 1055.32 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes6"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes6"]
 shape = SubResource( 5 )
 
 [node name="Spikes7" type="Area2D" parent="Items/Damage"]
-position = Vector2( 723.646, 994.24 )
+position = Vector2( 693.916, 964.51 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes7"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes7"]
 shape = SubResource( 5 )
 
 [node name="Spikes8" type="Area2D" parent="Items/Damage"]
-position = Vector2( 491.831, 1310.58 )
+position = Vector2( 688.407, 1367.15 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes8"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes8"]
 shape = SubResource( 5 )
 
 [node name="Spikes9" type="Area2D" parent="Items/Damage"]
-position = Vector2( 417.208, 905.758 )
+position = Vector2( 527.898, 372.477 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Items/Damage/Spikes9"]
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Damage/Spikes9"]
 shape = SubResource( 5 )
@@ -254,7 +312,7 @@ shape = SubResource( 5 )
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner"]
-position = Vector2( 1151.94, 628.559 )
+position = Vector2( 837.816, 568.581 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -268,11 +326,65 @@ frames = SubResource( 7 )
 animation = "passive"
 playing = true
 
+[node name="MushroomSpawner5" type="Node2D" parent="Items/Monsters"]
+script = ExtResource( 17 )
+
+[node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner5"]
+position = Vector2( 924.801, 1679.25 )
+scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Monsters/MushroomSpawner5/Monster"]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Items/Monsters/MushroomSpawner5/Monster"]
+frames = SubResource( 7 )
+animation = "passive"
+playing = true
+
+[node name="MushroomSpawner6" type="Node2D" parent="Items/Monsters"]
+script = ExtResource( 17 )
+
+[node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner6"]
+position = Vector2( 574.13, 1251.6 )
+scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Monsters/MushroomSpawner6/Monster"]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Items/Monsters/MushroomSpawner6/Monster"]
+frames = SubResource( 7 )
+animation = "passive"
+playing = true
+
+[node name="MushroomSpawner7" type="Node2D" parent="Items/Monsters"]
+script = ExtResource( 17 )
+
+[node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner7"]
+position = Vector2( 778.904, 992.855 )
+scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Monsters/MushroomSpawner7/Monster"]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Items/Monsters/MushroomSpawner7/Monster"]
+frames = SubResource( 7 )
+animation = "passive"
+playing = true
+
 [node name="MushroomSpawner2" type="Node2D" parent="Items/Monsters"]
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner2"]
-position = Vector2( 533.922, 526.085 )
+position = Vector2( 723.511, 650.338 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -290,7 +402,7 @@ playing = true
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner3"]
-position = Vector2( 1048.87, 130.935 )
+position = Vector2( 1014.02, 614.765 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -308,7 +420,7 @@ playing = true
 script = ExtResource( 17 )
 
 [node name="Monster" type="KinematicBody2D" parent="Items/Monsters/MushroomSpawner4"]
-position = Vector2( 423.774, 101.561 )
+position = Vector2( 540.565, 699.989 )
 scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_group_": true
@@ -340,3 +452,6 @@ texture = ExtResource( 16 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Townpath"]
 position = Vector2( 747.633, 1976.05 )
 shape = SubResource( 9 )
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 251.075, 131.945 )
