@@ -3,6 +3,7 @@ extends Node
 var freeze = false
 var samexist = false
 var roseexist = false
+var setting
 
 func unfreeze():
 	var t = Timer.new() #time spent being invulnerable
@@ -19,6 +20,3 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
