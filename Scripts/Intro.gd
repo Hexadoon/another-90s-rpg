@@ -1,10 +1,6 @@
 extends Sprite
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,7 +62,7 @@ func _ready():
 	t.start()
 	yield(t, "timeout")
 	text.set_text("Ted: Sucks for you.")
-	t.set_wait_time(text.text.length()/15)
+	t.set_wait_time(text.text.length()/10)
 	t.start()
 	yield(t, "timeout")
 	text.set_text("Madeline: I won't take the TV from you and Eddy when Friends comes on.")
@@ -86,6 +82,3 @@ func _ready():
 	Global.freeze=false
 	self.get_parent().get_node("Display/CanvasLayer/TextBox").visible=false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
