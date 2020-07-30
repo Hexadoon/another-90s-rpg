@@ -109,6 +109,20 @@ func get_input():
 
 func _physics_process(delta):
 	if(incapacitated and not Global.freeze):
+		Global.setting="Town"
+		var camera = self.get_node("Display")
+		self.get_parent().get_node("Background").get_child(0).queue_free()
+		var scene = preload("res://Scenes/TownBackground.tscn")
+		var node = scene.instance()
+		self.get_parent().get_node("Background").add_child(node)
+		self.get_parent().get_node("Foreground").get_child(0).queue_free()
+		scene = preload("res://Scenes/TownForeground.tscn")
+		node = scene.instance()
+		self.get_parent().get_node("Foreground").add_child(node)
+		camera.limit_bottom=1200
+		camera.limit_left=-1330
+		camera.limit_right=4280
+		camera.limit_top=31
 		invulnerable = false
 		self.position=lastheal
 		tedhp = tedmaxhp
