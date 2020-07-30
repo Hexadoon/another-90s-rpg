@@ -22,7 +22,8 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Installation
 
-- The playable files can be found [here]()
+- The playable files can be found [here](https://drive.google.com/file/d/1kBJ70BtRtLUN1fVPG-JBWR6FsXEJ7HNR/view?usp=sharing)
+- Make sure that the .pck file is still in the same folder as the .exe file
 
 ## Controls
 
