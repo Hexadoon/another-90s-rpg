@@ -22,8 +22,8 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Installation
 
-- The playable files can be found [here](https://drive.google.com/file/d/1kBJ70BtRtLUN1fVPG-JBWR6FsXEJ7HNR/view?usp=sharing)
-- Make sure that the .pck file is still in the same folder as the .exe file
+- The playable Mac and Windows files can be found [here](https://drive.google.com/drive/folders/1k9quPqA_gV4y_GIn97v_7u_chrQ38fOw?usp=sharing)
+- Make sure that the .pck file is still in the same folder as the .exe file on the Windows version
 
 ## Controls
 
