@@ -941,6 +941,8 @@ func playerspecial(user, target):
 			playerattack(0, "Samspecial")
 		if(user=="Rose"):
 			var i =0
+			while(hp[i]<=0):
+				i+=1
 			self.get_node("RichTextLabel").set_text("Target = Monster "+str(i+1))
 			var enter = false
 			while (not enter):
