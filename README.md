@@ -22,7 +22,7 @@ A convenient sudden rise in monster activities leads the group outside of the sa
 
 ## Installation
 
-- The playable Mac and Windows files can be found [here](https://drive.google.com/drive/folders/1k9quPqA_gV4y_GIn97v_7u_chrQ38fOw?usp=sharing)
+- The playable Mac and Windows files can be found [here](https://github.com/Hexadoon/another-90s-rpg/tree/master/GameZips)
 - Make sure that the .pck file is still in the same folder as the .exe file on the Windows version
 
 ## Controls
